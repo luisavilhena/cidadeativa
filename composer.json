@@ -1,0 +1,12 @@
+{
+    "name": "cidade-ativa/cidade-ativa-3",
+    "description": "Tema Cidade Ativa 3",
+    "type": "wordpress-theme",
+    "require": {
+        "php": ">=7.4",
+        "htmlburger/carbon-fields": "^3.6.11"
+    },
+    "config": {
+        "vendor-dir": "vendor"
+    }
+}

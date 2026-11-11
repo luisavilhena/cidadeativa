@@ -1,0 +1,206 @@
+/* ==========================================================================
+   Texto de post com grid de imagens (c-post-content)
+   Usado na notícia e no programa. O HTML do grid vem de inc/noticia.php:
+     .c-post-figure    imagem (+ legenda) na largura toda do contêiner
+     .c-post-images    duas imagens lado a lado
+     .c-post-gallery   galeria em carrossel
+     .c-post-video     vídeo em 16:9 na largura toda
+   O texto fica numa coluna de 560px (--centered: centralizada).
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Texto: coluna de 560px; imagens ocupam o contêiner
+   -------------------------------------------------------------------------- */
+
+.c-post-content {
+	font-size: 16px;
+	line-height: var(--line-body);
+}
+
+.c-post-content > * {
+	max-width: 560px;                          /* Figma: coluna de texto */
+}
+
+.c-post-content > * + * {
+	margin-top: 1em;
+}
+
+.c-post-content a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.c-post-content h2,
+.c-post-content h3,
+.c-post-content h4 {
+	margin-top: 1.5em;
+	font-size: var(--text-h4);
+	line-height: var(--line-heading);
+}
+
+/* Só as listas do texto (não as do carrossel) */
+.c-post-content > ul,
+.c-post-content > ol {
+	padding-left: 1.25em;
+	list-style: revert;
+}
+
+.c-post-content blockquote {
+	padding-left: 16px;
+	border-left: 2px solid var(--color-vermelho);
+}
+
+.c-post-content iframe {
+	max-width: 100%;
+}
+
+/* Figura e vídeo: largura toda do contêiner */
+.c-post-content > .c-post-video,
+.c-post-content > .wp-block-embed,
+.c-post-content > .c-post-figure,
+.c-post-content > .wp-block-image,
+.c-post-content > .c-post-images,
+.c-post-content > .c-post-gallery {
+	max-width: none;
+	margin-block: 48px;
+}
+
+.c-post-figure {
+	margin: 0;
+}
+
+/* Vídeo (YouTube, Vimeo...) em 16:9 */
+.c-post-video {
+	aspect-ratio: 16 / 9;
+	margin: 0;
+	background-color: var(--color-verde-escuro);
+}
+
+.c-post-video iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
+}
+
+.c-post-figure a {
+	display: block;
+}
+
+.c-post-figure img,
+.c-post-content > .wp-block-image img {
+	display: block;
+	height: auto;        /* Figma: imagem na largura toda */
+	object-fit: cover;
+	margin: 0 auto;
+}
+
+/* A figura tem a largura da imagem (centralizada); a legenda acompanha
+   essa largura e quebra linha em vez de alargar a figura. */
+.c-post-figure {
+	width: fit-content;
+	max-width: 100%;
+	margin-inline: auto;
+}
+
+.c-post-figure__caption,
+.c-post-content > .wp-block-image figcaption {
+	box-sizing: border-box;
+	width: 0;
+	min-width: 100%;
+	margin: 0;
+	padding: 12px 41px;                        /* Figma: faixa da legenda */
+	background-color: var(--color-branco);
+	font-size: 16px;
+	line-height: var(--line-body);
+	color: var(--color-cinza);
+}
+
+/* Duas imagens lado a lado */
+.c-post-images {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 24px;                                 /* Figma: 24px entre as imagens */
+	align-items: start;
+}
+
+.c-post-images .c-post-figure img {
+	aspect-ratio: 560 / 372;                   /* Figma: imagem de meia largura */
+}
+
+/* Galeria em carrossel
+   (os pontos ficam abaixo, porque a legenda pode cobrir a base da imagem) */
+.c-post-gallery {
+	--carousel-slide: 100%;
+	--carousel-gap: 0px;
+	--carousel-dot: var(--color-verde-escuro-surface);
+	position: relative;
+}
+
+.c-post-gallery .c-post-figure img {
+	aspect-ratio: 1144 / 761;                  /* Figma: galeria */
+}
+
+.c-post-gallery__arrow {
+	position: absolute;
+	top: calc(min(90vw, var(--container-max)) * 761 / 1144 / 2);   /* meio da imagem */
+	z-index: 1;
+	transform: translateY(-50%);
+}
+
+.c-post-gallery__arrow.is-prev {
+	left: -62px;                               /* Figma: fora da imagem */
+}
+
+.c-post-gallery__arrow.is-next {
+	right: -62px;
+}
+
+.c-post-gallery__dots {
+	justify-content: center;
+	margin-top: 16px;
+}
+
+.c-post-content--centered > * {
+	margin-inline: auto;
+}
+
+/* Desktop: imagens com no máximo 85% da altura da tela */
+@media (min-width: 768px) {
+	.c-post-figure img,
+	.c-post-content > .wp-block-image img {
+		max-height: 85vh;
+	}
+}
+
+@media (max-width: 1300px) {
+	/* Sem espaço fora da imagem: setas da galeria ficam por cima */
+	.c-post-gallery__arrow.is-prev {
+		left: 8px;
+	}
+
+	.c-post-gallery__arrow.is-next {
+		right: 8px;
+	}
+}
+
+@media (max-width: 767px) {
+	.c-post-content > .c-post-video,
+	.c-post-content > .wp-block-embed,
+	.c-post-content > .c-post-figure,
+	.c-post-content > .wp-block-image,
+	.c-post-content > .c-post-images,
+	.c-post-content > .c-post-gallery {
+		margin-block: 32px;
+	}
+
+	.c-post-figure__caption,
+	.c-post-content > .wp-block-image figcaption {
+		padding: 10px 16px;
+		font-size: 14px;
+	}
+
+	.c-post-images {
+		gap: 12px;
+	}
+}

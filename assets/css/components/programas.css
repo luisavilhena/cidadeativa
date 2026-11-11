@@ -1,0 +1,45 @@
+/* ==========================================================================
+   Componente: Nossos programas (carrossel)
+   ========================================================================== */
+
+.c-programas {
+	padding-top: 70px;                         /* Figma: topo → título */
+	padding-bottom: 81px;                      /* Figma: setas → fim da seção */
+	background-color: var(--color-verde-escuro);
+	color: var(--color-branco);
+}
+
+.c-programas__carousel {
+	--carousel-gap: clamp(1rem, 3.7vw, 3.125rem);
+	--carousel-slide: clamp(16rem, 27vw, 22.75rem);  /* Figma: 364px */
+	margin-top: var(--space-md);
+}
+
+/* Cards centralizados: o espaço nas laterais deixa qualquer card (inclusive
+   o primeiro e o último) ficar no meio. O espaço em cima e embaixo deixa o
+   card crescer no hover sem ser cortado. */
+.c-programas__track {
+	min-height: 529px;                         /* Figma: altura dos cards */
+	margin-block: -24px;
+	padding-block: 24px;
+	padding-inline: calc(50% - var(--carousel-slide) / 2);
+}
+
+.c-programas__track .c-carousel__slide {
+	scroll-snap-align: center;
+}
+
+.c-programas__nav {
+	margin-top: var(--space-lg);
+}
+
+@media (max-width: 767px) {
+	.c-programas {
+		padding-top: 48px;
+		padding-bottom: 48px;
+	}
+
+	.c-programas__track {
+		min-height: 420px;
+	}
+}

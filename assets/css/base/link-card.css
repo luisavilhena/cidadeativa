@@ -1,0 +1,61 @@
+/* ==========================================================================
+   Card de link (c-link-card) — "Saiba mais" do Acervo, ações e downloads
+   dos programas. Borda branca e seta (ícone link-arrow girado 45°).
+   Cor: verde (padrão) ou c-link-card--{cor}.
+   ========================================================================== */
+
+.c-link-card {
+	--link-card-bg: var(--color-verde);
+	--link-card-hover: var(--color-verde-hover);
+	--link-card-pressed: var(--color-verde-pressed);
+	--link-card-focus: var(--color-verde-focus);
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 20px;
+	max-width: 563px;                          /* Figma: 458px de texto + ícone */
+	min-height: 81px;
+	padding: 14px 16px;
+	border: 2px solid var(--color-branco);
+	background-color: var(--link-card-bg);
+	color: var(--color-verde-escuro);
+	font-size: 16px;
+	line-height: var(--line-body);
+	text-decoration: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.c-link-card:hover {
+	background-color: var(--link-card-hover);
+	color: var(--color-branco);
+}
+
+.c-link-card:active {
+	background-color: var(--link-card-pressed);
+}
+
+.c-link-card:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px var(--link-card-focus);
+}
+
+.c-link-card__icon {
+	width: 35px;
+	height: 35px;
+	transform: rotate(45deg);
+}
+
+/* Ícone sem girar (ex.: download) */
+.c-link-card__icon--plain {
+	width: 24px;
+	height: 24px;
+	transform: none;
+}
+
+/* Cores */
+.c-link-card--azul     { --link-card-bg: var(--color-azul);     --link-card-hover: var(--color-azul-hover);     --link-card-pressed: var(--color-azul-pressed);     --link-card-focus: var(--color-azul-focus); }
+.c-link-card--amarelo  { --link-card-bg: var(--color-amarelo);  --link-card-hover: var(--color-amarelo-hover);  --link-card-pressed: var(--color-amarelo-pressed);  --link-card-focus: var(--color-amarelo-focus); }
+.c-link-card--rosa     { --link-card-bg: var(--color-rosa);     --link-card-hover: var(--color-rosa-hover);     --link-card-pressed: var(--color-rosa-pressed);     --link-card-focus: var(--color-rosa-focus); }
+.c-link-card--laranja  { --link-card-bg: var(--color-laranja);  --link-card-hover: var(--color-laranja-hover);  --link-card-pressed: var(--color-laranja-pressed);  --link-card-focus: var(--color-laranja-focus); }
+.c-link-card--vermelho { --link-card-bg: var(--color-vermelho); --link-card-hover: var(--color-vermelho-hover); --link-card-pressed: var(--color-vermelho-pressed); --link-card-focus: var(--color-vermelho-focus); }

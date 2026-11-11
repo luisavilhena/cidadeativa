@@ -1,0 +1,240 @@
+/* ==========================================================================
+   Botões (c-button) — Figma: "Buttons"
+
+   Classes:
+     c-button                     base (tamanho grande, cheio, vermelho)
+     c-button--sm | --md | --lg   tamanho: pequeno, médio, grande
+     c-button--solid | --outline  estilo: cheio ou contorno
+     c-button--{cor}              vermelho (padrão), amarelo, verde, azul, rosa, laranja
+     c-button--icon               só ícone (redondo)
+     is-active                    selecionado (ex.: filtro ativo) = cheio
+
+   Estados: :hover, :active (pressionado), :focus-visible (anel de foco)
+   e desabilitado ([disabled], [aria-disabled="true"] ou .is-disabled).
+
+   Cada cor só define as variáveis --btn-*; as regras usam as variáveis.
+   ========================================================================== */
+
+.c-button {
+	/* Cor (padrão: vermelho) */
+	--btn-main: var(--color-vermelho);
+	--btn-surface: var(--color-vermelho-surface);
+	--btn-border: var(--color-vermelho-border);
+	--btn-hover: var(--color-vermelho-hover);
+	--btn-pressed: var(--color-vermelho-pressed);
+	--btn-focus: var(--color-vermelho-focus);
+
+	/* Tamanho (padrão: grande, 45px de altura) */
+	--btn-padding-y: 12px;
+	--btn-padding-x: 16px;
+	--btn-font-size: 14px;
+	--btn-icon-size: 20px;
+	--btn-radius: 10px;
+	--btn-gap: 8px;
+
+	/* Estilo cheio (padrão) */
+	--btn-bg: var(--btn-main);
+	--btn-color: var(--color-branco);
+	--btn-border-color: var(--btn-main);
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	gap: var(--btn-gap);
+	padding: calc(var(--btn-padding-y) - 1px) calc(var(--btn-padding-x) - 1px);
+	border: 1px solid var(--btn-border-color);
+	border-radius: var(--btn-radius);
+	background-color: var(--btn-bg);
+	color: var(--btn-color);
+	font-family: var(--font-body);
+	font-size: var(--btn-font-size);
+	font-weight: var(--font-weight-semibold);
+	line-height: 1.5;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+	transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.c-button .c-icon {
+	width: var(--btn-icon-size);
+	height: var(--btn-icon-size);
+}
+
+/* --------------------------------------------------------------------------
+   Tamanhos
+   -------------------------------------------------------------------------- */
+
+.c-button--sm {
+	--btn-padding-y: 4px;
+	--btn-padding-x: 10px;
+	--btn-font-size: 12px;
+	--btn-icon-size: 14px;
+	--btn-radius: 6px;
+	--btn-gap: 6px;
+}
+
+.c-button--md {
+	--btn-padding-y: 8px;
+	--btn-padding-x: 14px;
+	--btn-font-size: 14px;
+	--btn-icon-size: 16px;
+	--btn-radius: 8px;
+}
+
+.c-button--lg {
+	--btn-padding-y: 12px;
+	--btn-padding-x: 16px;
+	--btn-font-size: 14px;
+	--btn-icon-size: 20px;
+	--btn-radius: 10px;
+}
+
+/* Só ícone: redondo, com a mesma altura do botão de texto */
+.c-button--icon {
+	--btn-padding-x: var(--btn-padding-y);
+	border-radius: 50%;
+	aspect-ratio: 1;
+}
+
+.c-button--icon.c-button--lg {
+	--btn-padding-y: 10px;
+	--btn-icon-size: 24px;
+}
+
+/* --------------------------------------------------------------------------
+   Cores
+   -------------------------------------------------------------------------- */
+
+.c-button--amarelo {
+	--btn-main: var(--color-amarelo);
+	--btn-surface: var(--color-amarelo-surface);
+	--btn-border: var(--color-amarelo-border);
+	--btn-hover: var(--color-amarelo-hover);
+	--btn-pressed: var(--color-amarelo-pressed);
+	--btn-focus: var(--color-amarelo-focus);
+}
+
+.c-button--verde {
+	--btn-main: var(--color-verde);
+	--btn-surface: var(--color-verde-surface);
+	--btn-border: var(--color-verde-border);
+	--btn-hover: var(--color-verde-hover);
+	--btn-pressed: var(--color-verde-pressed);
+	--btn-focus: var(--color-verde-focus);
+}
+
+.c-button--azul {
+	--btn-main: var(--color-azul);
+	--btn-surface: var(--color-azul-surface);
+	--btn-border: var(--color-azul-border);
+	--btn-hover: var(--color-azul-hover);
+	--btn-pressed: var(--color-azul-pressed);
+	--btn-focus: var(--color-azul-focus);
+}
+
+.c-button--rosa {
+	--btn-main: var(--color-rosa);
+	--btn-surface: var(--color-rosa-surface);
+	--btn-border: var(--color-rosa-border);
+	--btn-hover: var(--color-rosa-hover);
+	--btn-pressed: var(--color-rosa-pressed);
+	--btn-focus: var(--color-rosa-focus);
+}
+
+.c-button--laranja {
+	--btn-main: var(--color-laranja);
+	--btn-surface: var(--color-laranja-surface);
+	--btn-border: var(--color-laranja-border);
+	--btn-hover: var(--color-laranja-hover);
+	--btn-pressed: var(--color-laranja-pressed);
+	--btn-focus: var(--color-laranja-focus);
+}
+
+/* --------------------------------------------------------------------------
+   Estilo cheio: estados
+   -------------------------------------------------------------------------- */
+
+.c-button:hover {
+	--btn-bg: var(--btn-hover);
+	--btn-border-color: var(--btn-hover);
+}
+
+.c-button:active {
+	--btn-bg: var(--btn-pressed);
+	--btn-border-color: var(--btn-pressed);
+	--btn-color: var(--btn-main);
+}
+
+.c-button:focus-visible {
+	outline: none;
+	box-shadow: 0 0 0 3px var(--btn-focus);
+}
+
+/* --------------------------------------------------------------------------
+   Estilo contorno: normal e estados
+   -------------------------------------------------------------------------- */
+
+.c-button--outline {
+	--btn-bg: transparent;
+	--btn-color: var(--color-verde-escuro);
+	--btn-border-color: var(--btn-main);
+}
+
+.c-button--outline .c-icon {
+	color: var(--btn-main);
+}
+
+.c-button--outline:hover {
+	--btn-bg: color-mix(in srgb, var(--btn-border) 70%, var(--color-branco));
+	--btn-border-color: var(--btn-main);
+}
+
+.c-button--outline:active {
+	--btn-bg: var(--btn-pressed);
+	--btn-border-color: var(--btn-pressed);
+	--btn-color: var(--btn-main);
+}
+
+.c-button--outline:focus-visible {
+	--btn-bg: var(--color-branco);
+}
+
+/* Selecionado (ex.: filtro ativo): igual ao cheio */
+.c-button--outline.is-active {
+	--btn-bg: var(--btn-main);
+	--btn-color: var(--color-branco);
+	--btn-border-color: var(--btn-main);
+}
+
+.c-button--outline.is-active .c-icon {
+	color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Desabilitado (cheio e contorno)
+   -------------------------------------------------------------------------- */
+
+.c-button:disabled,
+.c-button[aria-disabled="true"],
+.c-button.is-disabled {
+	--btn-bg: var(--btn-border);
+	--btn-border-color: var(--btn-border);
+	--btn-color: var(--btn-surface);
+	cursor: default;
+	pointer-events: none;
+}
+
+.c-button--outline:disabled,
+.c-button--outline[aria-disabled="true"],
+.c-button--outline.is-disabled {
+	--btn-bg: var(--color-branco);
+	--btn-border-color: var(--btn-border);
+	--btn-color: var(--color-verde-escuro-surface);
+}
+
+.c-button--outline:disabled .c-icon,
+.c-button--outline[aria-disabled="true"] .c-icon,
+.c-button--outline.is-disabled .c-icon {
+	color: var(--btn-border);
+}

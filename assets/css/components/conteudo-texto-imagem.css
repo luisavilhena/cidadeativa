@@ -1,0 +1,18 @@
+/* ==========================================================================
+   Componente: Conteúdo 3 / 9
+   Título e texto de um lado, imagem do outro.
+   ========================================================================== */
+
+.c-conteudo-texto-imagem .l-grid-2 {
+	align-items: center;
+}
+
+.c-conteudo-texto-imagem__body .c-content__title {
+	margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+	.c-conteudo-texto-imagem.has-image-left .c-conteudo-texto-imagem__media {
+		order: -1;
+	}
+}

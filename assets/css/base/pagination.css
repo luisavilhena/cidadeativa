@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Paginação (c-pagination) — listagens do Acervo e de Notícias
+   O espaço acima dela é definido por cada listagem.
+   ========================================================================== */
+
+.c-pagination {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 5px;
+}
+
+.c-pagination__item {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	min-width: 32px;
+	height: 32px;
+	padding: 0 6px;
+	border: 1px solid var(--color-verde-escuro-surface);
+	border-radius: 8px;
+	background-color: var(--color-branco);
+	font-size: 13px;
+	font-weight: var(--font-weight-semibold);
+	color: var(--color-verde-escuro);
+	text-decoration: none;
+}
+
+a.c-pagination__item:hover {
+	border-color: var(--color-vermelho);
+}
+
+.c-pagination__item.is-current {
+	border-color: var(--color-vermelho);
+	background-color: var(--color-vermelho);
+	color: var(--color-branco);
+}
+
+.c-pagination__item .c-icon {
+	width: 16px;
+	height: 16px;
+}
+
+.c-pagination__item.is-disabled {
+	color: var(--color-verde-escuro-surface);
+}

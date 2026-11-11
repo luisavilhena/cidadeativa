@@ -1,0 +1,125 @@
+/* ==========================================================================
+   Componente: Hero (abertura)
+   Ocupa 100% da altura da tela. Texto à esquerda; triângulo verde com a
+   ilustração à direita.
+
+   Desktop: o triângulo + ilustração vai do topo do título até o fim da
+   1ª linha da seção seguinte (Números), ou seja, passa do hero e ocupa
+   parte de Números. Rola normalmente com a página.
+
+   As medidas vêm de assets/js/hero.js, pelas variáveis:
+     --hero-visual-offset  distância do topo do hero até o título
+     --hero-visual-height  do título até o fim da 1ª linha de Números
+   ========================================================================== */
+
+.c-hero {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;               /* título logo abaixo do menu */
+	min-height: calc(100vh - var(--header-height));
+	min-height: calc(100svh - var(--header-height));
+	padding-top: 80px;                         /* Figma (home): fim do menu → título */
+	padding-bottom: 0;
+	background-color: transparent;
+}
+
+@media (max-width: 767px) {
+	.c-hero {
+		padding-top: 24px;
+		padding-bottom: 48px;
+	}
+}
+
+.c-hero__inner {
+	position: relative;
+	z-index: 1;
+}
+
+.c-hero__content {
+	width: min(100%, 38rem);                /* 564px */
+}
+
+.c-hero__title {
+	margin-bottom: var(--space-lg);
+	font-family: var(--font-body);
+	font-size: var(--text-h3);
+	line-height: var(--line-heading);
+}
+
+.c-hero__text {
+	font-size: var(--text-body-lg);
+	line-height: var(--line-body);
+}
+
+.c-hero__text p + p {
+	margin-top: 1em;
+}
+
+/* --------------------------------------------------------------------------
+   Triângulo + ilustração
+   Até 1199px: ficam abaixo do texto, alinhados à direita da tela.
+   A ilustração define a altura do bloco e o triângulo ocupa a altura toda.
+   -------------------------------------------------------------------------- */
+
+.c-hero__visual {
+	position: relative;
+	order: 2;
+	width: min(100%, 40rem);
+	margin-top: var(--space-lg);
+	margin-left: auto;
+}
+
+.c-hero__stage {
+	position: relative;
+}
+
+/* Proporção fixa: a largura é sempre metade da altura (ponta em ângulo reto) */
+.c-hero__triangle {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	height: 100%;
+	aspect-ratio: 1 / 2;
+	background-color: var(--color-verde-escuro);
+	clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+/* A ilustração ocupa todo o bloco */
+.c-hero__image {
+	position: relative;
+	width: 100%;
+	height: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Desktop (a partir de 1200px): texto à esquerda e, à direita, o triângulo
+   do título até a 1ª linha de Números. Abaixo disso o bloco ficaria por
+   trás do texto.
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 1200px) {
+	.c-hero__visual {
+		position: absolute;
+		top: var(--hero-visual-offset, 0px);
+		right: 0;
+		z-index: 0;
+		width: 46%;
+		height: var(--hero-visual-height, 100vh);
+		margin-top: 0;
+		pointer-events: none;
+	}
+
+	.c-hero__stage {
+		height: 100%;
+	}
+
+	/* A ilustração aparece inteira, o maior possível dentro do espaço */
+	.c-hero__image {
+		position: absolute;
+		inset: 0;
+		height: 100%;
+		object-fit: contain;
+		object-position: center;
+	}
+}

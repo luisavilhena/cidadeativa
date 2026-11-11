@@ -1,0 +1,20 @@
+/* ==========================================================================
+   Componente: Conteúdo 5
+   Título na coluna da direita e imagem ocupando toda a largura.
+   ========================================================================== */
+
+.c-conteudo-titulo-imagem__title {
+	margin-bottom: var(--space-lg);
+}
+
+@media (min-width: 768px) {
+	.c-conteudo-titulo-imagem__title {
+		grid-column: 2;
+	}
+}
+
+.c-conteudo-titulo-imagem__image {
+	width: 100%;
+	max-height: 90vh;
+	object-fit: cover;
+}

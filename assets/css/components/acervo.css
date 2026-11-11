@@ -1,0 +1,36 @@
+/* ==========================================================================
+   Componente: Acervo
+   ========================================================================== */
+
+.c-acervo {
+	padding-top: 79px;                         /* Figma: topo → título */
+	padding-bottom: 79px;                      /* Figma: lista → fim da seção */
+	background-color: var(--color-azul-surface);
+}
+
+@media (max-width: 767px) {
+	.c-acervo {
+		padding-top: 48px;
+		padding-bottom: 48px;
+	}
+}
+
+.c-acervo__list {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));   /* Figma: 4 cards */
+	gap: 40px 24px;                            /* Figma: 24px entre os cards */
+	margin-top: 59px;                          /* Figma: botão → cards */
+}
+
+@media (max-width: 1023px) {
+	.c-acervo__list {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+	.c-acervo__list {
+		gap: 32px 16px;
+		margin-top: 32px;
+	}
+}

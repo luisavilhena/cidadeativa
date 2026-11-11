@@ -1,0 +1,27 @@
+/* ==========================================================================
+   Componente: Conteúdo 1 / 2 / 6
+   Até 2 colunas (subtítulo + texto) e um título opcional acima.
+   ========================================================================== */
+
+@media (min-width: 768px) {
+	/* Título na largura toda */
+	.c-conteudo-colunas__title.is-full {
+		grid-column: 1 / -1;
+	}
+
+	/* Título alinhado a uma das colunas */
+	.c-conteudo-colunas__title.is-left {
+		grid-row: 1;
+		grid-column: 1;
+	}
+
+	.c-conteudo-colunas__title.is-right {
+		grid-row: 1;
+		grid-column: 2;
+	}
+
+	/* Com título, as colunas sempre começam na linha de baixo */
+	.has-title .c-conteudo-colunas__column {
+		grid-row: 2;
+	}
+}

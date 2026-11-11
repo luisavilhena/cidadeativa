@@ -1,0 +1,163 @@
+/* ==========================================================================
+   Página: notícia (single-post.php)
+   Medidas em px do Figma (frame de 1336px); valores de celular até 767px.
+
+   Grid de imagens dentro do texto (ver inc/noticia.php):
+     .c-post-figure    imagem (+ legenda) na largura toda do contêiner
+     .c-post-images    duas imagens lado a lado
+     .c-post-gallery   galeria em carrossel
+   O texto fica numa coluna de 560px.
+   ========================================================================== */
+
+.c-noticia {
+	padding-top: 8px;                          /* Figma: fim do menu → capa */
+}
+
+/* Capa */
+.c-noticia__banner {
+	aspect-ratio: 1144 / 469;
+	overflow: hidden;
+	background-color: var(--color-verde-escuro-surface);
+}
+
+.c-noticia__banner-image {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+/* Título e data */
+.c-noticia__header {
+	margin-top: 37px;                          /* Figma: capa → título */
+}
+
+.c-noticia__title {
+	max-width: 852px;
+	font-family: var(--font-body);
+	font-size: var(--text-h3);
+	line-height: var(--line-heading);
+}
+
+.c-noticia__meta {
+	margin-top: 60px;                          /* Figma: título → data */
+	font-size: 18px;
+	line-height: var(--line-body);
+	color: var(--color-vermelho);
+}
+
+.c-noticia__content {
+	margin-top: 72px;                          /* Figma: data → texto */
+}
+
+/* --------------------------------------------------------------------------
+   Notícias relacionadas
+   -------------------------------------------------------------------------- */
+
+.c-noticias-relacionadas {
+	padding-top: 48px;
+	padding-bottom: 92px;                      /* Figma: botões → rodapé */
+	background-color: transparent;
+}
+
+.c-noticias-relacionadas__divider {
+	height: 0;
+	margin: 0 0 100px;                         /* Figma: linha → título */
+	border: 0;
+	border-top: 2px solid var(--color-vermelho);
+}
+
+.c-noticias-relacionadas .c-section__title {
+	margin-bottom: 77px;                       /* Figma: título → cards */
+}
+
+.c-noticias-relacionadas__carousel {
+	--carousel-gap: 25px;                      /* Figma: 25px entre cards */
+	--carousel-per-view: 3;
+	/* Largura do card: o contêiner (90% da tela, até --container-max) dividido pelos cards visíveis */
+	--carousel-slide: calc((min(90vw, var(--container-max)) - (var(--carousel-per-view) - 1) * var(--carousel-gap)) / var(--carousel-per-view));
+	position: relative;
+}
+
+.c-noticias-relacionadas__carousel .c-card {
+	height: 100%;
+}
+
+/* Setas fora do contêiner, na altura do meio da imagem do card (361 × 358) */
+.c-noticias-relacionadas__arrow {
+	position: absolute;
+	top: calc(var(--carousel-slide) * 358 / 361 / 2);
+	z-index: 1;
+	transform: translateY(-50%);
+}
+
+.c-noticias-relacionadas__arrow.is-prev {
+	left: max(8px, calc((100% - min(90vw, var(--container-max))) / 2 - 56px));
+}
+
+.c-noticias-relacionadas__arrow.is-next {
+	right: max(8px, calc((100% - min(90vw, var(--container-max))) / 2 - 56px));
+}
+
+.c-noticias-relacionadas__nav {
+	margin-top: 30px;
+}
+
+.c-noticias-relacionadas__actions {
+	gap: 14px;                                 /* Figma: 14px entre os botões */
+	margin-top: 40px;
+}
+
+.c-noticias-relacionadas__button.c-button--solid {
+	width: min(100%, 322px);                   /* Figma: 322px */
+}
+
+/* --------------------------------------------------------------------------
+   Desktop: imagens com no máximo 85% da altura da tela
+   -------------------------------------------------------------------------- */
+
+@media (min-width: 768px) {
+	.c-noticia__banner {
+		max-height: 85vh;
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Tablet e celular
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+	.c-noticias-relacionadas__carousel {
+		--carousel-per-view: 2;
+	}
+}
+
+@media (max-width: 767px) {
+	.c-noticia__header {
+		margin-top: 24px;
+	}
+
+	.c-noticia__meta {
+		margin-top: 16px;
+	}
+
+	.c-noticia__content {
+		margin-top: 32px;
+	}
+
+	.c-noticias-relacionadas {
+		padding-bottom: 56px;
+	}
+
+	.c-noticias-relacionadas__divider {
+		margin-bottom: 48px;
+	}
+
+	.c-noticias-relacionadas .c-section__title {
+		margin-bottom: 32px;
+	}
+
+	.c-noticias-relacionadas__carousel {
+		--carousel-gap: 16px;
+		--carousel-per-view: 1.2;
+	}
+}

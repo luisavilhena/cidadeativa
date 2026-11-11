@@ -1,0 +1,215 @@
+/* ==========================================================================
+   Componente: Quem somos
+   Semicírculo amarelo com o texto e, abaixo, a ilustração com as etiquetas.
+   ========================================================================== */
+
+.c-quem-somos {
+	padding-top: 0;
+	padding-bottom: 60px;                      /* Figma: ilustração → fim da seção */
+	background-color: var(--color-fundo-neutro);
+}
+
+/* --------------------------------------------------------------------------
+   Semicírculo
+   -------------------------------------------------------------------------- */
+
+.c-quem-somos__intro {
+	position: relative;
+	isolation: isolate;
+	padding-top: 120px;                        /* Figma: topo do semicírculo → título */
+	padding-bottom: 102px;                     /* Figma: fim do texto → base do semicírculo */
+}
+
+.c-quem-somos__intro::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-color: var(--color-amarelo-border);
+	border-radius: 50% 50% 0 0 / 100% 100% 0 0; /* meia elipse: acompanha a altura do texto */
+}
+
+.c-quem-somos__intro-inner {
+	text-align: center;
+}
+
+/* Parallax (a partir de tablet): o texto fica preso no centro da tela
+   enquanto o amarelo sobe por baixo dele, e só volta a rolar depois que
+   a tela inteira fica amarela.
+   - O texto fica num bloco da altura da tela (menos o cabeçalho), centrado
+     na vertical e preso logo abaixo do cabeçalho.
+   - Altura do amarelo: 1 tela + a curva do semicírculo (50vw) + o tempo
+     que a tela fica toda amarela com o texto parado (30svh). */
+@media (min-width: 768px) {
+	.c-quem-somos__intro {
+		min-height: calc(100svh + 50vw + 30svh);
+		padding-block: 0;
+	}
+
+	.c-quem-somos__intro::before {
+		border-radius: 50vw 50vw 0 0;
+	}
+
+	.c-quem-somos__intro-inner {
+		position: sticky;
+		top: var(--header-height-scrolled);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		min-height: calc(100svh - var(--header-height-scrolled));
+	}
+}
+
+.c-quem-somos__text {
+	width: min(100%, 35rem);                   /* 560px */
+	margin-inline: auto;
+}
+
+.c-quem-somos__text p + p {
+	margin-top: 1.25em;
+}
+
+/* --------------------------------------------------------------------------
+   Ilustração + etiquetas
+   -------------------------------------------------------------------------- */
+
+.c-quem-somos__team {
+	position: relative;
+	padding-top: 45px;                         /* Figma: semicírculo → ilustração */
+}
+
+@media (max-width: 767px) {
+	.c-quem-somos {
+		padding-bottom: 40px;
+	}
+
+	.c-quem-somos__intro {
+		padding-top: 80px;
+		padding-bottom: 56px;
+	}
+
+	.c-quem-somos__team {
+		padding-top: 32px;
+	}
+}
+
+.c-quem-somos__image {
+	width: min(100%, 58.5rem);                 /* 936px */
+	margin-inline: auto;
+}
+
+.c-quem-somos__people {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: var(--space-xs);
+	margin-top: var(--space-lg);
+}
+
+/* Desktop: etiquetas posicionadas sobre a ilustração */
+@media (min-width: 1024px) {
+	.c-quem-somos__people {
+		position: absolute;
+		inset: var(--space-xl) 0 0;
+		display: block;
+		margin-top: 0;
+		pointer-events: none;
+	}
+
+	.c-quem-somos__person {
+		position: absolute;
+		pointer-events: auto;
+	}
+
+	.c-quem-somos__person.is-topo           { top: 0;   left: 58%; }
+	.c-quem-somos__person.is-topo-esquerda  { top: 2%;  left: 8%; }
+	.c-quem-somos__person.is-esquerda       { top: 24%; left: 0; }
+	.c-quem-somos__person.is-esquerda-baixo { top: 57%; left: 1%; }
+	.c-quem-somos__person.is-centro         { top: 49%; left: 45%; }
+	.c-quem-somos__person.is-direita        { top: 21%; right: 0; }
+	.c-quem-somos__person.is-direita-baixo  { top: 70%; right: 0; }
+	.c-quem-somos__person.is-base           { top: 93%; left: 65%; }
+}
+
+/* --------------------------------------------------------------------------
+   Etiqueta (c-tag)
+   -------------------------------------------------------------------------- */
+
+.c-tag {
+	--tag-border: var(--color-vermelho);
+	--tag-surface: var(--color-vermelho-surface);
+}
+
+.c-tag--azul { --tag-border: var(--color-azul-escuro); --tag-surface: var(--color-azul-surface); }
+.c-tag--rosa { --tag-border: var(--color-rosa); --tag-surface: var(--color-rosa-surface); }
+.c-tag--amarelo { --tag-border: var(--color-amarelo); --tag-surface: var(--color-amarelo-surface); }
+.c-tag--verde { --tag-border: var(--color-verde); --tag-surface: var(--color-verde-surface); }
+.c-tag--laranja { --tag-border: var(--color-laranja); --tag-surface: var(--color-laranja-surface); }
+
+.c-tag__inner {
+	display: inline-flex;
+	align-items: center;
+	gap: clamp(0.75rem, 1.5vw, 1.25rem);
+	padding-right: clamp(0.875rem, 1.5vw, 1.25rem);
+	border: 2px solid var(--tag-border);
+	border-radius: var(--radius-pill);
+	background-color: var(--tag-surface);
+	text-decoration: none;
+}
+
+.c-tag__avatar {
+	display: grid;
+	place-items: center;
+	flex-shrink: 0;
+	width: clamp(2.5rem, 4vw, 3.375rem);       /* 54px */
+	aspect-ratio: 1;
+	overflow: hidden;
+	border-radius: 50%;
+	background-color: var(--tag-border);
+}
+
+.c-tag__photo {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.c-tag__icon {
+	width: 78%;
+	height: 78%;
+	color: var(--color-verde-escuro);
+}
+
+.c-tag__name {
+	font-size: clamp(1rem, 0.85rem + 0.5vw, 1.25rem);
+	font-weight: var(--font-weight-semibold);
+	line-height: var(--line-relaxed);
+	letter-spacing: 0.02em;
+	white-space: nowrap;
+}
+
+/* Etiqueta clicável: cresce no hover */
+button.c-tag__inner,
+a.c-tag__inner {
+	padding-block: 0;
+	padding-left: 0;
+	font: inherit;
+	color: inherit;
+	cursor: pointer;
+	transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button.c-tag__inner:hover,
+button.c-tag__inner:focus-visible,
+a.c-tag__inner:hover,
+a.c-tag__inner:focus-visible {
+	transform: scale(1.08);
+	box-shadow: var(--shadow-cover-sm);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	button.c-tag__inner,
+	a.c-tag__inner {
+		transition: none;
+	}
+}

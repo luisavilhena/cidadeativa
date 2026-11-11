@@ -1,0 +1,37 @@
+/* ==========================================================================
+   Componente: Notícias (últimos posts do blog)
+   ========================================================================== */
+
+.c-noticias {
+	padding-top: 92px;                         /* Figma: fim do Acervo → título */
+	padding-bottom: 92px;
+}
+
+@media (max-width: 767px) {
+	.c-noticias {
+		padding-top: 48px;
+		padding-bottom: 48px;
+	}
+}
+
+.c-noticias__intro {
+	width: min(100%, 47.25rem);                /* 756px */
+	font-size: var(--text-lead);
+	line-height: var(--line-relaxed);
+	letter-spacing: 0.02em;
+}
+
+.c-noticias__intro p + p {
+	margin-top: 0;
+}
+
+.c-noticias__actions .c-button--solid {
+	width: min(100%, 20.125rem);               /* 322px */
+}
+
+.c-noticias__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+	gap: var(--grid-gap);
+	margin-top: var(--space-xl);
+}

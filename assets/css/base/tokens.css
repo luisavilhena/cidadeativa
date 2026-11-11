@@ -1,0 +1,108 @@
+/* ==========================================================================
+   Variáveis do design (cores, tipografia, espaçamentos)
+   Os tamanhos usam clamp(): mínimo no celular, máximo no desktop (1336px).
+   ========================================================================== */
+
+:root {
+	/* ----------------------------------------------------------------------
+	   Cores (Figma: "Colors"). Cada família tem 6 tons:
+	     --color-{cor}          principal (main)
+	     --color-{cor}-surface  fundo claro
+	     --color-{cor}-border   borda
+	     --color-{cor}-hover    passar o mouse
+	     --color-{cor}-pressed  clicado
+	     --color-{cor}-focus    anel de foco
+	   ---------------------------------------------------------------------- */
+
+	--color-vermelho: #ef4656;
+	--color-vermelho-surface: #e8d4d6;
+	--color-vermelho-border: #ed9fa7;
+	--color-vermelho-hover: #b3343c;
+	--color-vermelho-pressed: #84242d;
+	--color-vermelho-focus: #fddbdf;
+
+	--color-amarelo: #fdba15;
+	--color-amarelo-surface: #fdeeca;
+	--color-amarelo-border: #fed87a;
+	--color-amarelo-hover: #dea313;
+	--color-amarelo-pressed: #c08f1f;
+	--color-amarelo-focus: #fff4ce;
+
+	--color-verde: #58b947;
+	--color-verde-surface: #c6eebf;
+	--color-verde-border: #82c975;
+	--color-verde-hover: #3c8232;
+	--color-verde-pressed: #2c6322;
+	--color-verde-focus: #dff4db;
+
+	--color-rosa: #ef58a0;
+	--color-rosa-surface: #eeccdc;
+	--color-rosa-border: #ed97c1;
+	--color-rosa-hover: #c94b87;
+	--color-rosa-pressed: #923360;
+	--color-rosa-focus: #fcd9d9;
+
+	--color-azul: #c5c7e4;
+	--color-azul-surface: #e0e1f2;
+	--color-azul-border: #cfd1e8;
+	--color-azul-hover: #8487b7;
+	--color-azul-pressed: #3f2478;
+	--color-azul-focus: #e3d8ff;
+
+	--color-laranja: #f36c21;
+	--color-laranja-surface: #f4d0bc;
+	--color-laranja-border: #eea881;
+	--color-laranja-hover: #c85a1d;
+	--color-laranja-pressed: #8c3e12;
+	--color-laranja-focus: #ffe3d2;
+
+	--color-verde-escuro: #033838;
+	--color-verde-escuro-surface: #b9c4c4;
+	--color-verde-escuro-border: #6b8c8c;
+	--color-verde-escuro-hover: #033838;
+	--color-verde-escuro-pressed: #033838;
+	--color-verde-escuro-focus: #cbd7d9;
+
+	/* Neutros e cores de fundo de seção */
+	--color-branco: #ffffff;
+	--color-fundo-neutro: #f7ede8;
+	--color-lima: #e7eaa4;                     /* fundo de Parcerias/Premiações */
+	--color-azul-escuro: #4e58a7;              /* borda da etiqueta azul (Quem somos) */
+	--color-cinza: #757575;                    /* legendas de imagem (Figma: notícia) */
+
+	/* Tipografia */
+	--text-body: clamp(0.9375rem, 0.88rem + 0.25vw, 1rem);          /* 15 → 16 */
+	--text-body-lg: clamp(1rem, 0.93rem + 0.3vw, 1.125rem);         /* 16 → 18 */
+	--text-lead: clamp(1.0625rem, 0.98rem + 0.35vw, 1.25rem);       /* 17 → 20 */
+	--text-h4: clamp(1.5rem, 1.2rem + 1vw, 2rem);                   /* 24 → 32 */
+	--text-h3: clamp(1.75rem, 1.25rem + 1.6vw, 2.5rem);             /* 28 → 40 */
+	--text-h2: clamp(2rem, 1.4rem + 2vw, 3rem);                     /* 32 → 48 */
+	--text-number: clamp(2rem, 1.4rem + 2vw, 3rem);                 /* 32 → 48 */
+
+	--line-tight: 1;
+	--line-heading: 1.2;
+	--line-body: 1.25;
+	--line-relaxed: 1.45;
+
+	/* Espaçamentos */
+	--space-2xs: clamp(0.25rem, 0.5vw, 0.5rem);
+	--space-xs: clamp(0.5rem, 1vw, 0.75rem);
+	--space-sm: clamp(0.75rem, 1.5vw, 1rem);
+	--space-md: clamp(1rem, 2vw, 1.5rem);
+	--space-lg: clamp(1.5rem, 3vw, 2.5rem);
+	--space-xl: clamp(2rem, 5vw, 4.5rem);
+
+	/* Layout */
+	--container-width: 90%;
+	--container-max: 1400px;                                       /* 1144px */
+	--grid-gap: clamp(1rem, 2vw, 1.5rem);
+
+	/* Sombras */
+	--shadow-cover: 3px 4px 8px rgba(0, 0, 0, 0.25);      /* capas da listagem do Acervo */
+	--shadow-cover-sm: 4px 4px 6.7px rgba(0, 0, 0, 0.25); /* capas nos carrosséis */
+
+	/* Bordas */
+	--radius-sm: 10px;
+	--radius-md: 20px;
+	--radius-pill: 999px;
+}

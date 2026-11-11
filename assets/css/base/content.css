@@ -1,0 +1,31 @@
+/* ==========================================================================
+   Estilos compartilhados pelos conteúdos genéricos (c-content)
+   ========================================================================== */
+
+.c-content__title {
+	font-family: var(--font-heading);
+	font-size: var(--text-h3);
+	line-height: var(--line-heading);
+}
+
+.c-content__subtitle {
+	margin-bottom: var(--space-xs);
+	font-family: var(--font-body);
+	font-size: var(--text-h4);
+	font-weight: var(--font-weight-bold);
+	color: var(--color-vermelho);
+}
+
+.c-content__text {
+	font-size: var(--text-body-lg);
+}
+
+.c-content__text p + p {
+	margin-top: 1em;
+}
+
+.c-content__image {
+	width: 100%;
+	border-radius: var(--radius-md);
+	object-fit: cover;
+}

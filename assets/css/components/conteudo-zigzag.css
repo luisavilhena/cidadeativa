@@ -1,0 +1,33 @@
+/* ==========================================================================
+   Componente: Conteúdo 4 (zigue-zague)
+   O 1º bloco fica na coluna da esquerda, o 2º na da direita, e assim por diante.
+   ========================================================================== */
+
+.c-conteudo-zigzag .c-content__title {
+	margin-bottom: var(--space-xl);
+}
+
+.c-conteudo-zigzag__list {
+	display: flex;
+	flex-direction: column;
+	gap: var(--space-xl);
+}
+
+.c-conteudo-zigzag__item .c-content__image {
+	margin-bottom: var(--space-md);
+}
+
+@media (min-width: 768px) {
+	.c-conteudo-zigzag__item {
+		width: calc(50% - var(--grid-gap));
+	}
+
+	.c-conteudo-zigzag__item:nth-child(even) {
+		align-self: flex-end;
+	}
+
+	/* Cada bloco sobe um pouco ao lado do anterior */
+	.c-conteudo-zigzag__item + .c-conteudo-zigzag__item {
+		margin-top: calc(-2 * var(--space-xl));
+	}
+}

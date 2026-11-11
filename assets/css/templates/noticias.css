@@ -1,0 +1,110 @@
+/* ==========================================================================
+   Página: listagem de Notícias (home.php)
+   Medidas em px do Figma (frame de 1336px); valores de celular até 767px.
+   ========================================================================== */
+
+.c-noticias-lista {
+	padding-top: 80px;                         /* Figma: fim do menu → título */
+	padding-bottom: 100px;                     /* Figma: paginação → faixa verde */
+}
+
+.c-noticias-lista__toolbar {
+	margin-top: 73px;                          /* Figma: texto → busca */
+}
+
+.c-noticias-lista__search {
+	width: min(100%, 317px);                   /* Figma: 317px */
+}
+
+/* Grid de cards (c-card) */
+.c-noticias-lista__grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 24px 25px;                            /* Figma: 24px entre linhas, 25px entre colunas */
+	margin-top: 40px;                          /* Figma: busca → grid */
+}
+
+.c-noticias-lista .c-pagination {
+	margin-top: 52px;                          /* Figma: grid → paginação */
+}
+
+.c-noticias-lista__empty {
+	margin-top: 40px;
+	font-size: var(--text-body-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Faixa de periódicos
+   -------------------------------------------------------------------------- */
+
+.c-periodicos {
+	padding-top: 103px;                        /* Figma: topo → texto */
+	padding-bottom: 93px;                      /* Figma: botões → rodapé */
+	background-color: var(--color-verde-escuro);
+	color: var(--color-branco);
+	text-align: center;
+}
+
+.c-periodicos__text {
+	font-size: 24px;
+	line-height: var(--line-heading);
+}
+
+.c-periodicos__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 13px;                                 /* Figma: 13px entre os botões */
+	margin-top: 63px;                          /* Figma: texto → botões */
+}
+
+.c-periodicos__button {
+	width: min(100%, 227px);                   /* Figma: 227px */
+}
+
+/* --------------------------------------------------------------------------
+   Tablet e celular
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+	.c-noticias-lista__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media (max-width: 767px) {
+	.c-noticias-lista {
+		padding-top: 48px;
+		padding-bottom: 56px;
+	}
+
+	.c-noticias-lista__toolbar {
+		margin-top: 40px;
+	}
+
+	.c-noticias-lista__search {
+		width: 100%;
+	}
+
+	.c-noticias-lista__grid {
+		grid-template-columns: 1fr;
+		margin-top: 32px;
+	}
+
+	.c-noticias-lista .c-pagination {
+		margin-top: 40px;
+	}
+
+	.c-periodicos {
+		padding-top: 56px;
+		padding-bottom: 56px;
+	}
+
+	.c-periodicos__text {
+		font-size: 20px;
+	}
+
+	.c-periodicos__actions {
+		margin-top: 32px;
+	}
+}

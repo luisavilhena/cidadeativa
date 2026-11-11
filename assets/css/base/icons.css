@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Ícones (c-icon)
+   Desenhados com máscara: assumem a cor do texto (currentColor), então
+   acompanham os estados dos botões. Os arquivos ficam em assets/icons.
+   Para um ícone novo: salve o SVG em assets/icons e crie a classe abaixo.
+   ========================================================================== */
+
+.c-icon {
+	display: inline-block;
+	flex-shrink: 0;
+	width: 20px;
+	height: 20px;
+	background-color: currentColor;
+	-webkit-mask: var(--icon) center / contain no-repeat;
+	mask: var(--icon) center / contain no-repeat;
+}
+
+.c-icon--acervo            { --icon: url("../../icons/acervo.svg"); }
+.c-icon--materias          { --icon: url("../../icons/materias.svg"); }
+.c-icon--email             { --icon: url("../../icons/email.svg"); }
+.c-icon--search            { --icon: url("../../icons/search.svg"); }
+.c-icon--chevron-down      { --icon: url("../../icons/chevron-down.svg"); }
+.c-icon--arrow-prev        { --icon: url("../../icons/arrow-prev.svg"); }
+.c-icon--arrow-next        { --icon: url("../../icons/arrow-next.svg"); }
+.c-icon--pagination-first  { --icon: url("../../icons/pagination-first.svg"); }
+.c-icon--pagination-prev   { --icon: url("../../icons/pagination-prev.svg"); }
+.c-icon--pagination-next   { --icon: url("../../icons/pagination-next.svg"); }
+.c-icon--pagination-last   { --icon: url("../../icons/pagination-last.svg"); }
+.c-icon--perm-identity     { --icon: url("../../icons/perm-identity.svg"); }
+.c-icon--download          { --icon: url("../../icons/download.svg"); }
+.c-icon--link-arrow        { --icon: url("../../icons/link-arrow.svg"); }
+.c-icon--pinwheel          { --icon: url("../../icons/pinwheel.svg"); }
+.c-icon--social-instagram  { --icon: url("../../icons/social-instagram.svg"); }
+.c-icon--social-youtube    { --icon: url("../../icons/social-youtube.svg"); }
+.c-icon--social-linkedin   { --icon: url("../../icons/social-linkedin.svg"); }

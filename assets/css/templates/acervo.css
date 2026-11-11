@@ -1,0 +1,161 @@
+/* ==========================================================================
+   Página: Acervo (listagem)
+   Medidas em px do Figma (frame de 1336px); valores de celular até 767px.
+   ========================================================================== */
+
+.c-acervo-lista {
+	padding-top: 80px;                         /* Figma: fim do menu → título */
+	padding-bottom: 96px;                      /* Figma: paginação → rodapé */
+}
+
+.c-acervo-lista__container {
+	width: min(90%, 1152px);                   /* Figma: 92px de margem em 1336px */
+	margin-inline: auto;
+}
+
+/* --------------------------------------------------------------------------
+   Busca + ordenação
+   -------------------------------------------------------------------------- */
+
+.c-acervo-lista__toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 16px;
+	margin-top: 114px;                         /* Figma: texto → busca */
+}
+
+.c-acervo-lista__search {
+	width: min(100%, 293px);                   /* Figma: 293px */
+}
+
+.c-acervo-lista__sort {
+	display: flex;
+	align-items: center;
+	gap: 16px;
+}
+
+.c-acervo-lista__sort-label {
+	font-size: 16px;
+	font-style: italic;
+	line-height: var(--line-relaxed);
+	letter-spacing: 0.02em;
+	color: var(--color-vermelho);
+}
+
+.c-acervo-lista__sort-select {
+	width: 191px;
+	padding: 12px 44px 12px 16px;
+	border: 1px solid var(--color-vermelho);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-branco);
+	background-image: url("../../icons/chevron-down.svg");
+	background-repeat: no-repeat;
+	background-position: right 16px center;
+	background-size: 20px 20px;
+	font-family: var(--font-body);
+	font-size: 14px;
+	line-height: var(--line-body);
+	color: var(--color-verde-escuro);
+	appearance: none;
+	cursor: pointer;
+}
+
+/* --------------------------------------------------------------------------
+   Filtros de categoria
+   -------------------------------------------------------------------------- */
+
+.c-acervo-lista__filters {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 15px;
+	margin-top: 39px;                          /* Figma: busca → filtros */
+}
+
+/* Os filtros são botões (c-button contorno; o ativo fica cheio).
+   Aqui só a largura: 152px no Figma, encolhendo para caber numa linha. */
+.c-acervo-lista__filter {
+	flex: 1 1 0;
+	min-width: 112px;
+	max-width: 152px;
+}
+
+/* --------------------------------------------------------------------------
+   Grid de itens
+   -------------------------------------------------------------------------- */
+
+.c-acervo-lista__grid {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 81px 16px;                            /* Figma: 81px entre linhas */
+	margin-top: 56px;                          /* Figma: filtros → grid */
+	transition: opacity 0.2s ease;
+}
+
+
+.c-acervo-lista .c-pagination {
+	margin-top: 100px;                         /* Figma: grid → paginação */
+}
+
+.c-acervo-lista__empty {
+	margin-top: 56px;
+	font-size: var(--text-body-lg);
+}
+
+/* --------------------------------------------------------------------------
+   Tablet e celular
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 1023px) {
+	.c-acervo-lista__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		row-gap: 64px;
+	}
+}
+
+@media (max-width: 767px) {
+	.c-acervo-lista {
+		padding-top: 48px;
+		padding-bottom: 56px;
+	}
+
+	.c-acervo-lista__toolbar {
+		margin-top: 48px;
+	}
+
+	.c-acervo-lista__search {
+		width: 100%;
+	}
+
+	/* Filtros numa linha que rola para o lado */
+	.c-acervo-lista__filters {
+		flex-wrap: nowrap;
+		gap: 8px;
+		margin-top: 24px;
+		margin-inline: -5.5%;
+		padding-inline: 5.5%;
+		overflow-x: auto;
+		scrollbar-width: none;
+	}
+
+	.c-acervo-lista__filters::-webkit-scrollbar {
+		display: none;
+	}
+
+	.c-acervo-lista__filter {
+		flex: 0 0 auto;
+		min-width: 120px;
+		max-width: none;
+	}
+
+	.c-acervo-lista__grid {
+		grid-template-columns: 1fr;
+		row-gap: 48px;
+		margin-top: 32px;
+	}
+
+	.c-acervo-lista .c-pagination {
+		margin-top: 56px;
+	}
+}

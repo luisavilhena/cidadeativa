@@ -1,0 +1,60 @@
+/* ==========================================================================
+   Campo de busca (c-search) — listagens do Acervo e de Notícias
+   Tamanhos: padrão (texto 14px, 45px de altura) e --lg (texto 16px).
+   A largura é definida por quem usa.
+   ========================================================================== */
+
+.c-search {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	padding: 12px 16px;
+	border: 1px solid var(--color-vermelho);
+	border-radius: var(--radius-sm);
+	background-color: var(--color-branco);
+}
+
+.c-search:focus-within {
+	outline: 2px solid var(--color-vermelho);
+	outline-offset: 2px;
+}
+
+.c-search__icon {
+	color: var(--color-vermelho);
+}
+
+.c-search__input {
+	flex: 1;
+	min-width: 0;
+	padding: 0;
+	border: 0;
+	background: none;
+	font-family: var(--font-body);
+	font-size: 14px;
+	line-height: var(--line-body);
+	color: var(--color-verde-escuro);
+	outline: none;
+}
+
+.c-search__input::placeholder {
+	font-style: italic;
+	color: var(--color-verde-escuro-border);
+	opacity: 1;
+}
+
+/* Tamanho maior (Figma: Notícias, 42px de altura e texto 16px) */
+.c-search--lg {
+	gap: 10px;
+	min-height: 42px;
+	padding: 6px 24px 7px 20px;
+}
+
+.c-search--lg .c-search__icon {
+	width: 18px;
+	height: 18px;
+}
+
+.c-search--lg .c-search__input {
+	font-size: 16px;
+	line-height: var(--line-body);
+}

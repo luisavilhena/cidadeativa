@@ -1,0 +1,67 @@
+/* ==========================================================================
+   Carrossel (c-carousel)
+   Usado em "Nossos programas" e em "Acervo relacionado".
+   O JS (assets/js/carousel.js) liga as setas e cria os pontos.
+
+   Variáveis que cada uso pode trocar:
+     --carousel-gap    espaço entre os cards
+     --carousel-slide  largura de cada card
+     --carousel-dot    cor dos pontos inativos
+   ========================================================================== */
+
+.c-carousel {
+	--carousel-gap: 24px;
+	--carousel-slide: 268px;
+	--carousel-dot: var(--color-branco);
+}
+
+.c-carousel__track {
+	display: flex;
+	gap: var(--carousel-gap);
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+}
+
+.c-carousel__track::-webkit-scrollbar {
+	display: none;
+}
+
+.c-carousel__slide {
+	flex: 0 0 var(--carousel-slide);
+	scroll-snap-align: start;
+}
+
+.c-carousel__nav {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 36px;
+}
+
+.c-carousel__dots {
+	display: flex;
+	gap: 6px;
+}
+
+.c-carousel__dot {
+	width: 10px;
+	height: 10px;
+	padding: 0;
+	border: 0;
+	border-radius: 50%;
+	background-color: var(--carousel-dot);
+	cursor: pointer;
+}
+
+.c-carousel__dot.is-active {
+	background-color: var(--color-vermelho);
+}
+
+/* Quando todos os cards cabem na tela, setas e pontos somem */
+.c-carousel.is-static [data-carousel-prev],
+.c-carousel.is-static [data-carousel-next],
+.c-carousel.is-static .c-carousel__dots {
+	display: none;
+}

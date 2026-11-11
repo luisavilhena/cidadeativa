@@ -1,0 +1,86 @@
+/* ==========================================================================
+   Componente: Números
+   Cada número fica sobre uma forma colorida (imagem).
+   ========================================================================== */
+
+.c-numeros {
+	padding-top: 0;                            /* o espaço vem do hero (100% da tela) */
+	padding-bottom: 0;                         /* o espaço vem do topo de Pilares */
+}
+
+/* Logo depois do hero: fundo transparente para o triângulo fixo aparecer,
+   e a 1ª linha com 3 números para deixar o espaço do triângulo livre. */
+.c-hero + .c-numeros {
+	background-color: transparent;
+}
+
+@media (min-width: 1200px) {
+	.c-hero + .c-numeros .c-numeros__list {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+
+	.c-hero + .c-numeros .c-numeros__item:nth-child(4) {
+		grid-column-start: 1;
+	}
+}
+
+.c-numeros__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
+	gap: 43px var(--grid-gap);                 /* Figma: 43px entre as linhas */
+}
+
+.c-numeros__item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	padding-top: 42px;                         /* Figma: topo da forma → número */
+	padding-left: 30px;
+}
+
+.c-numeros__shape {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 105px;
+	aspect-ratio: 1;
+	object-fit: contain;
+}
+
+.c-numeros__number {
+	position: relative;
+	font-family: var(--font-heading);
+	font-size: var(--text-number);
+	font-weight: var(--font-weight-bold);
+	line-height: var(--line-heading);
+	letter-spacing: 0.02em;
+}
+
+.c-numeros__label {
+	position: relative;
+	max-width: 15rem;
+	padding-left: 48px;
+	font-size: var(--text-body-lg);
+	line-height: var(--line-body);
+}
+
+/* Animação de entrada (numeros.js): os itens surgem da esquerda para a
+   direita, em sequência, cada vez que a lista entra na tela. */
+.c-numeros__list.is-animated .c-numeros__item {
+	opacity: 0;
+	transform: translateX(-32px);
+}
+
+.c-numeros__list.is-animated.is-visible .c-numeros__item {
+	opacity: 1;
+	transform: none;
+	transition:
+		opacity 0.35s ease-out,
+		transform 0.35s ease-out;
+	transition-delay: calc(var(--reveal-index, 0) * 60ms);
+}
+
+/* Entrando por cima (rolando para cima): aparece sem animação. */
+.c-numeros__list.is-animated.is-instant .c-numeros__item {
+	transition: none;
+}

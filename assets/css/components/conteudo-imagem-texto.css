@@ -1,0 +1,12 @@
+/* ==========================================================================
+   Componente: Conteúdo 8
+   Título, subtítulo e texto à esquerda; imagem à direita.
+   ========================================================================== */
+
+.c-conteudo-imagem-texto .l-grid-2 {
+	align-items: center;
+}
+
+.c-conteudo-imagem-texto__body .c-content__title {
+	margin-bottom: var(--space-sm);
+}

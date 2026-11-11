@@ -1,0 +1,66 @@
+/* ==========================================================================
+   Componente: Logos (parcerias, premiações...)
+   ========================================================================== */
+
+.c-logos {
+	padding-top: 81px;                         /* Figma: topo → título "Parcerias" */
+	padding-bottom: 108px;                     /* Figma: logos de Premiações → fim */
+	background-color: var(--color-lima);
+}
+
+/* Dois blocos de logos seguidos: o espaço entre eles é o padding-bottom
+   do primeiro (Figma: logos de Parcerias → título "Premiações") */
+.c-logos:has(+ .c-logos) {
+	padding-bottom: 97px;
+}
+
+.c-logos + .c-logos {
+	padding-top: 0;
+}
+
+@media (max-width: 767px) {
+	.c-logos {
+		padding-top: 48px;
+		padding-bottom: 56px;
+	}
+
+	.c-logos:has(+ .c-logos) {
+		padding-bottom: 56px;
+	}
+}
+
+/* Sempre 6 logos por linha; 3 no celular */
+.c-logos__list {
+	display: grid;
+	grid-template-columns: repeat(6, minmax(0, 1fr));
+	align-items: center;
+	gap: var(--space-lg) var(--grid-gap);
+	margin-top: var(--space-md);
+}
+
+@media (max-width: 767px) {
+	.c-logos__list {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+}
+
+.c-logos__item {
+	display: flex;
+	justify-content: center;
+}
+
+.c-logos__link {
+	display: block;
+	transition: opacity 0.2s ease;
+}
+
+.c-logos__link:hover {
+	opacity: 0.7;
+}
+
+.c-logos__image {
+	width: auto;
+	max-width: 100%;
+	max-height: clamp(4rem, 7vw, 6rem);
+	object-fit: contain;
+}
