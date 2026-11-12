@@ -77,7 +77,7 @@ function ca3_person_projects( $post_id ) {
  * @return WP_Post[]
  */
 function ca3_collaborators() {
-	return get_posts(
+	$posts = get_posts(
 		array(
 			'post_type'   => 'ca-collaborator',
 			'post_status' => 'publish',
@@ -86,6 +86,89 @@ function ca3_collaborators() {
 				'menu_order' => 'ASC',
 				'title'      => 'ASC',
 			),
+		)
+	);
+
+	return ca3_only_site_language( $posts );
+}
+
+/**
+ * Remove as traduções (inglês, espanhol...) quando existe o perfil no
+ * idioma do site.
+ *
+ * Os idiomas vêm das tabelas do Polylang (o plugin está desativado, mas os
+ * dados continuam no banco): taxonomia "language" (idioma de cada post) e
+ * "post_translations" (grupo de traduções: idioma => ID).
+ * Posts sem idioma ficam. Se a pessoa não tem perfil no idioma do site,
+ * fica uma única versão (a primeira de: idioma do site, en, es...).
+ *
+ * @param WP_Post[] $posts
+ * @return WP_Post[]
+ */
+function ca3_only_site_language( $posts ) {
+	global $wpdb;
+
+	if ( ! $posts ) {
+		return $posts;
+	}
+
+	$ids          = wp_list_pluck( $posts, 'ID' );
+	$placeholders = implode( ',', array_fill( 0, count( $ids ), '%d' ) );
+
+	// Idioma e grupo de traduções de cada post.
+	$rows = $wpdb->get_results(
+		$wpdb->prepare(
+			"SELECT tr.object_id, tt.taxonomy, t.slug, tt.description
+			FROM {$wpdb->term_relationships} tr
+			INNER JOIN {$wpdb->term_taxonomy} tt ON tt.term_taxonomy_id = tr.term_taxonomy_id
+			INNER JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+			WHERE tt.taxonomy IN ( 'language', 'post_translations' ) AND tr.object_id IN ( $placeholders )", // phpcs:ignore WordPress.DB.PreparedSQLPlaceholders
+			$ids
+		)
+	);
+
+	if ( ! $rows ) {
+		return $posts;
+	}
+
+	$languages = array();
+	$groups    = array();
+
+	foreach ( $rows as $row ) {
+		if ( 'language' === $row->taxonomy ) {
+			$languages[ (int) $row->object_id ] = $row->slug;
+		} else {
+			$group = maybe_unserialize( $row->description );
+			if ( is_array( $group ) ) {
+				$groups[ (int) $row->object_id ] = array_map( 'intval', $group );
+			}
+		}
+	}
+
+	$site_language = substr( get_locale(), 0, 2 );
+	$preference    = array( $site_language, 'pt', 'en', 'es' );
+	$published     = array_flip( $ids );
+
+	return array_values(
+		array_filter(
+			$posts,
+			function ( $post ) use ( $languages, $groups, $preference, $published ) {
+				$id = $post->ID;
+
+				if ( ! isset( $languages[ $id ], $groups[ $id ] ) ) {
+					return true;
+				}
+
+				// Fica só a versão preferida entre as traduções publicadas.
+				$group = $groups[ $id ];
+				foreach ( $preference as $language ) {
+					if ( isset( $group[ $language ] ) && isset( $published[ $group[ $language ] ] ) ) {
+						return $group[ $language ] === $id;
+					}
+				}
+
+				return true;
+			}
 		)
 	);
 }
