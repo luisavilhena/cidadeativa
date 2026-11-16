@@ -25,7 +25,8 @@
 	margin-top: 1em;
 }
 
-.c-post-content a {
+/* Links do texto (os botões, como o do [create_button], têm o próprio estilo) */
+.c-post-content a:not(.c-button) {
 	color: inherit;
 	text-decoration: underline;
 }
@@ -91,7 +92,7 @@
 .c-post-content > .wp-block-image img {
 	display: block;
 	height: auto;        /* Figma: imagem na largura toda */
-	object-fit: cover;
+	object-fit: contain;
 	margin: 0 auto;
 }
 
@@ -170,6 +171,7 @@
 	.c-post-figure img,
 	.c-post-content > .wp-block-image img {
 		max-height: 85vh;
+		object-fit: contain;
 	}
 }
 

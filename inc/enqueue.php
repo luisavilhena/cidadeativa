@@ -84,7 +84,6 @@ function ca3_enqueue_assets() {
 	if ( is_singular( 'ca-biblioteca' ) ) {
 		ca3_enqueue_style( 'ca3-acervo-card', 'assets/css/components/acervo-card.css', array( 'ca3-content' ) );
 		ca3_enqueue_style( 'ca3-acervo-item', 'assets/css/templates/acervo-item.css', array( 'ca3-acervo-card' ) );
-		ca3_enqueue_script( 'carousel' );
 	}
 
 	// CSS e JS extras de componentes de página.

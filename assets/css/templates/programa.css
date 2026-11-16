@@ -246,6 +246,11 @@
 		padding-bottom: 56px;
 	}
 
+	/* Título (ou "Ação") 20px abaixo do caminho: -20px + o gap de 40px do bloco */
+	.c-programa__heading {
+		margin-top: -20px;
+	}
+
 	.c-programa > * + * {
 		margin-top: 40px;
 	}

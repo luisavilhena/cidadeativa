@@ -2,14 +2,19 @@
 /**
  * Posição da foto dos membros da equipe.
  *
- * Caixa "Posição da foto" na edição do membro: mostra a imagem destacada no
- * mesmo recorte do popup e deixa arrastar a foto para escolher a parte que
- * aparece. O valor é salvo como "x% y%" e usado em object-position.
+ * Caixa "Posição da foto" na edição do membro: mostra a imagem destacada em
+ * dois recortes e deixa arrastar a foto em cada um para escolher a parte que
+ * aparece:
+ *   - popup:     recorte do popup da pessoa (344 × 229)
+ *   - miniatura: círculo da etiqueta na home (se ficar sem ajuste, usa a
+ *                mesma posição do popup)
+ * Os valores são salvos como "x% y%" e usados em object-position.
  *
  * @package cidade-ativa-3
  */
 
-const CA3_PHOTO_POSITION_META = '_ca3_photo_position';
+const CA3_PHOTO_POSITION_META     = '_ca3_photo_position';
+const CA3_PHOTO_POSITION_TAG_META = '_ca3_photo_position_tag';
 
 /**
  * Tipos de conteúdo com a caixa.
@@ -19,12 +24,37 @@ function ca3_photo_position_post_types() {
 }
 
 /**
- * Posição salva ("x% y%") ou vazio.
+ * Recortes editáveis: campo do formulário, meta e rótulo.
  */
-function ca3_photo_position( $post_id ) {
-	$value = get_post_meta( $post_id, CA3_PHOTO_POSITION_META, true );
+function ca3_photo_position_contexts() {
+	return array(
+		'popup' => array(
+			'field' => 'ca3_photo_position',
+			'meta'  => CA3_PHOTO_POSITION_META,
+			'label' => __( 'Popup', 'cidade-ativa-3' ),
+		),
+		'tag'   => array(
+			'field' => 'ca3_photo_position_tag',
+			'meta'  => CA3_PHOTO_POSITION_TAG_META,
+			'label' => __( 'Miniatura na home', 'cidade-ativa-3' ),
+		),
+	);
+}
 
-	return ca3_sanitize_photo_position( $value );
+/**
+ * Posição salva ("x% y%") ou vazio.
+ * A miniatura (tag) usa a do popup quando não tem ajuste próprio.
+ */
+function ca3_photo_position( $post_id, $context = 'popup' ) {
+	$contexts = ca3_photo_position_contexts();
+	$context  = isset( $contexts[ $context ] ) ? $context : 'popup';
+	$value    = ca3_sanitize_photo_position( get_post_meta( $post_id, $contexts[ $context ]['meta'], true ) );
+
+	if ( ! $value && 'tag' === $context ) {
+		return ca3_photo_position( $post_id, 'popup' );
+	}
+
+	return $value;
 }
 
 /**
@@ -44,8 +74,8 @@ function ca3_sanitize_photo_position( $value ) {
 /**
  * Atributo style para a imagem destacada da pessoa (vazio se não houver posição).
  */
-function ca3_photo_position_style( $post_id ) {
-	$position = ca3_photo_position( $post_id );
+function ca3_photo_position_style( $post_id, $context = 'popup' ) {
+	$position = ca3_photo_position( $post_id, $context );
 
 	return $position ? 'object-position: ' . $position . ';' : '';
 }
@@ -53,8 +83,8 @@ function ca3_photo_position_style( $post_id ) {
 /**
  * Atributos de imagem com a posição salva.
  */
-function ca3_photo_position_attr( $post_id, $attr = array() ) {
-	$style = ca3_photo_position_style( $post_id );
+function ca3_photo_position_attr( $post_id, $attr = array(), $context = 'popup' ) {
+	$style = ca3_photo_position_style( $post_id, $context );
 
 	if ( $style ) {
 		$attr['style'] = $style;
@@ -78,25 +108,37 @@ add_action( 'add_meta_boxes', 'ca3_photo_position_add_meta_box' );
 function ca3_photo_position_render_meta_box( $post ) {
 	$thumb_id = get_post_thumbnail_id( $post );
 	$src      = $thumb_id ? wp_get_attachment_image_url( $thumb_id, 'medium_large' ) : '';
-	$position = ca3_photo_position( $post->ID );
+	$popup    = ca3_sanitize_photo_position( get_post_meta( $post->ID, CA3_PHOTO_POSITION_META, true ) );
 
 	wp_nonce_field( 'ca3_photo_position', 'ca3_photo_position_nonce' );
 	?>
-	<div class="ca3-photo-position" data-ca3-photo-position>
-		<p class="ca3-photo-position__empty" <?php echo $src ? 'hidden' : ''; ?>>
-			<?php esc_html_e( 'Defina a imagem destacada para posicionar a foto.', 'cidade-ativa-3' ); ?>
-		</p>
-		<div class="ca3-photo-position__frame" <?php echo $src ? '' : 'hidden'; ?>>
-			<img src="<?php echo esc_url( $src ); ?>" alt="" draggable="false" style="object-position: <?php echo esc_attr( $position ? $position : '50% 0%' ); ?>;">
+	<p class="ca3-photo-position__empty" data-ca3-photo-empty <?php echo $src ? 'hidden' : ''; ?>>
+		<?php esc_html_e( 'Defina a imagem destacada para posicionar a foto.', 'cidade-ativa-3' ); ?>
+	</p>
+
+	<?php foreach ( ca3_photo_position_contexts() as $context => $info ) : ?>
+		<?php
+		$saved = ca3_sanitize_photo_position( get_post_meta( $post->ID, $info['meta'], true ) );
+		// Posição mostrada: a salva; na miniatura sem ajuste, a do popup.
+		$shown = $saved ? $saved : ( 'tag' === $context && $popup ? $popup : '50% 0%' );
+		?>
+		<div class="ca3-photo-position is-<?php echo esc_attr( $context ); ?>" data-ca3-photo-position <?php echo $src ? '' : 'hidden'; ?>>
+			<p class="ca3-photo-position__label"><strong><?php echo esc_html( $info['label'] ); ?></strong></p>
+			<div class="ca3-photo-position__frame">
+				<img src="<?php echo esc_url( $src ); ?>" alt="" draggable="false" style="object-position: <?php echo esc_attr( $shown ); ?>;">
+			</div>
+			<p>
+				<button type="button" class="button-link" data-ca3-photo-position-reset>
+					<?php echo esc_html( 'tag' === $context ? __( 'Usar a mesma posição do popup', 'cidade-ativa-3' ) : __( 'Voltar ao padrão (topo)', 'cidade-ativa-3' ) ); ?>
+				</button>
+			</p>
+			<input type="hidden" name="<?php echo esc_attr( $info['field'] ); ?>" value="<?php echo esc_attr( $saved ); ?>">
 		</div>
-		<p class="description">
-			<?php esc_html_e( 'Arraste a foto para escolher a parte que aparece no popup e na etiqueta da home.', 'cidade-ativa-3' ); ?>
-		</p>
-		<p>
-			<button type="button" class="button-link" data-ca3-photo-position-reset><?php esc_html_e( 'Voltar ao padrão (topo)', 'cidade-ativa-3' ); ?></button>
-		</p>
-		<input type="hidden" name="ca3_photo_position" value="<?php echo esc_attr( $position ); ?>">
-	</div>
+	<?php endforeach; ?>
+
+	<p class="description">
+		<?php esc_html_e( 'Arraste a foto em cada recorte para escolher a parte que aparece. A miniatura só vale quando a etiqueta da home usa a imagem destacada (campo "Foto" da etiqueta vazio).', 'cidade-ativa-3' ); ?>
+	</p>
 	<?php
 }
 
@@ -111,12 +153,14 @@ function ca3_photo_position_save( $post_id ) {
 		return;
 	}
 
-	$value = ca3_sanitize_photo_position( wp_unslash( $_POST['ca3_photo_position'] ?? '' ) );
+	foreach ( ca3_photo_position_contexts() as $info ) {
+		$value = ca3_sanitize_photo_position( wp_unslash( $_POST[ $info['field'] ] ?? '' ) );
 
-	if ( $value ) {
-		update_post_meta( $post_id, CA3_PHOTO_POSITION_META, $value );
-	} else {
-		delete_post_meta( $post_id, CA3_PHOTO_POSITION_META );
+		if ( $value ) {
+			update_post_meta( $post_id, $info['meta'], $value );
+		} else {
+			delete_post_meta( $post_id, $info['meta'] );
+		}
 	}
 }
 add_action( 'save_post', 'ca3_photo_position_save' );

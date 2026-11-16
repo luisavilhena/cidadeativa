@@ -20,10 +20,10 @@ Container::make( 'theme_options', __( 'Textos da página do item', 'cidade-ativa
 			Field::make( 'separator', 'ca3_acervo_item_related_sep', __( 'Acervo relacionado', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'ca3_acervo_item_related_title', __( 'Título', 'cidade-ativa-3' ) )->set_width( 33 ),
 			Field::make( 'text', 'ca3_acervo_item_related_button', __( 'Texto do botão (leva à listagem)', 'cidade-ativa-3' ) )->set_width( 33 ),
-			Field::make( 'text', 'ca3_acervo_item_related_count', __( 'Quantidade de itens', 'cidade-ativa-3' ) )
+			Field::make( 'text', 'ca3_acervo_item_related_count', __( 'Quantidade de itens (máximo 4)', 'cidade-ativa-3' ) )
 				->set_attribute( 'type', 'number' )
+				->set_attribute( 'max', '4' )
+				->set_help_text( __( 'No celular aparecem só os 2 primeiros.', 'cidade-ativa-3' ) )
 				->set_width( 33 ),
-			Field::make( 'text', 'ca3_acervo_item_related_prev', __( 'Seta anterior (leitores de tela)', 'cidade-ativa-3' ) )->set_width( 50 ),
-			Field::make( 'text', 'ca3_acervo_item_related_next', __( 'Seta próxima (leitores de tela)', 'cidade-ativa-3' ) )->set_width( 50 ),
 		)
 	);

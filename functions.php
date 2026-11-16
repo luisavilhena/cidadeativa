@@ -26,3 +26,4 @@ require_once CA3_DIR . '/inc/photo-position.php';
 require_once CA3_DIR . '/inc/carbon-fields.php';
 require_once CA3_DIR . '/inc/enqueue.php';
 require_once CA3_DIR . '/inc/helpers/template-tags.php';
+require_once CA3_DIR . '/inc/shortcodes.php';

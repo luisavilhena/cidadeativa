@@ -47,8 +47,8 @@ ca3_section_open( 'quem_somos', $args );
 						// Foto: a da etiqueta ou a imagem destacada da pessoa.
 						if ( ! $photo && $member ) {
 							$photo = get_post_thumbnail_id( $member );
-							// Mesma posição escolhida na caixa "Posição da foto".
-							$photo_attr = ca3_photo_position_attr( $member->ID, $photo_attr );
+							// Posição da "Miniatura na home" (caixa "Posição da foto").
+							$photo_attr = ca3_photo_position_attr( $member->ID, $photo_attr, 'tag' );
 						}
 
 						// O que acontece ao clicar: abre um popup ou segue um link.

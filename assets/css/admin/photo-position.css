@@ -1,8 +1,20 @@
 /* Caixa "Posição da foto" (admin, edição do membro da equipe). */
 
+.ca3-photo-position[hidden] {
+	display: none;
+}
+
+.ca3-photo-position + .ca3-photo-position {
+	margin-top: 16px;
+	padding-top: 12px;
+	border-top: 1px solid #dcdcde;
+}
+
+.ca3-photo-position__label {
+	margin: 0 0 6px;
+}
+
 .ca3-photo-position__frame {
-	/* Mesmo recorte da foto no popup da pessoa (.c-person-dialog__photo). */
-	aspect-ratio: 344 / 229;
 	overflow: hidden;
 	background: #f0f0f1;
 	cursor: grab;
@@ -10,8 +22,16 @@
 	user-select: none;
 }
 
-.ca3-photo-position__frame[hidden] {
-	display: none;
+/* Mesmo recorte da foto no popup da pessoa (.c-person-dialog__photo) */
+.ca3-photo-position.is-popup .ca3-photo-position__frame {
+	aspect-ratio: 344 / 229;
+}
+
+/* Miniatura redonda da etiqueta na home (.c-tag__avatar), ampliada */
+.ca3-photo-position.is-tag .ca3-photo-position__frame {
+	width: 120px;
+	aspect-ratio: 1;
+	border-radius: 50%;
 }
 
 .ca3-photo-position__frame.is-dragging {

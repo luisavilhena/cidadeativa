@@ -207,16 +207,17 @@ function ca3_acervo_item_data( $post_id ) {
 }
 
 /**
- * Itens relacionados: os da mesma categoria do acervo, sem o item atual, até a
- * quantidade configurada. Se houver menos de CA3_ACERVO_RELATED_MIN deles, a lista
- * é completada com os itens mais recentes de outras categorias até somar
- * CA3_ACERVO_RELATED_MIN (sem carrossel; ver template-parts/acervo/related.php).
+ * Itens relacionados: até CA3_ACERVO_RELATED_MAX itens da mesma categoria do
+ * acervo, sem o item atual. Se houver menos, completa com os itens mais
+ * recentes de outras categorias até somar CA3_ACERVO_RELATED_MAX.
+ * O campo "Quantidade de itens" pode diminuir esse número (máximo 4).
+ * Ver template-parts/acervo/related.php.
  */
-const CA3_ACERVO_RELATED_MIN = 4;
+const CA3_ACERVO_RELATED_MAX = 4;
 
 function ca3_acervo_related_query( $post_id ) {
 	$count      = (int) ca3_acervo_item_text( 'related_count' );
-	$count      = $count > 0 ? $count : 8;
+	$count      = $count > 0 ? min( $count, CA3_ACERVO_RELATED_MAX ) : CA3_ACERVO_RELATED_MAX;
 	$categories = wp_list_pluck( get_the_category( $post_id ), 'term_id' );
 
 	$base = array(
@@ -242,14 +243,14 @@ function ca3_acervo_related_query( $post_id ) {
 		);
 	}
 
-	if ( count( $ids ) < CA3_ACERVO_RELATED_MIN ) {
+	if ( count( $ids ) < $count ) {
 		$ids = array_merge(
 			$ids,
 			get_posts(
 				array_merge(
 					$base,
 					array(
-						'numberposts'  => CA3_ACERVO_RELATED_MIN - count( $ids ),
+						'numberposts'  => $count - count( $ids ),
 						'post__not_in' => array_merge( array( $post_id ), $ids ),
 					)
 				)

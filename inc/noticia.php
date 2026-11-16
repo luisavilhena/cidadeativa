@@ -155,7 +155,15 @@ function ca3_post_group_images( $html ) {
 		}
 
 		$embed = '';
-		$text  = trim( str_replace( "\xc2\xa0", ' ', $node->textContent ) );
+
+		// Texto do parágrafo sem o conteúdo de dentro dos iframes (o editor às
+		// vezes deixa ali um <span> com caractere invisível) e sem espaços
+		// invisíveis (nbsp, zero-width, BOM).
+		$text = '';
+		foreach ( ( new DOMXPath( $doc ) )->query( './/text()[not(ancestor::iframe)]', $node ) as $text_node ) {
+			$text .= $text_node->nodeValue;
+		}
+		$text = trim( preg_replace( '/[\x{00A0}\x{200B}\x{FEFF}]/u', ' ', $text ) );
 
 		if ( 'iframe' === $node->nodeName ) {
 			$embed = $doc->saveHTML( $node );

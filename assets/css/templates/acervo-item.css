@@ -144,44 +144,15 @@
 	margin-bottom: 27px;                       /* Figma: título → cards */
 }
 
-.c-acervo-relacionado__carousel {
-	--carousel-gap: 24px;                      /* Figma: 24px entre cards */
-	--carousel-per-view: 4;                    /* Figma: 4 cards visíveis */
-	/* Largura do card: o contêiner (90% da tela, até --container-max) dividido pelos cards visíveis */
-	--carousel-slide: calc((min(90vw, var(--container-max)) - (var(--carousel-per-view) - 1) * var(--carousel-gap)) / var(--carousel-per-view));
-	position: relative;
-}
-
-/* Setas nas laterais, na altura do meio da capa (capa 367 × 526) */
-.c-acervo-relacionado__arrow {
-	position: absolute;
-	top: calc(var(--carousel-slide) * 526 / 367 / 2);
-	z-index: 1;
-	transform: translateY(-50%);
-}
-
-/* Fora do contêiner: 12px antes da borda dele (mínimo de 8px da tela) */
-.c-acervo-relacionado__arrow.is-prev {
-	left: max(8px, calc((100% - min(90vw, var(--container-max))) / 2 - 56px));
-}
-
-.c-acervo-relacionado__arrow.is-next {
-	right: max(8px, calc((100% - min(90vw, var(--container-max))) / 2 - 56px));
-}
-
-/* Até 4 itens: grade simples, sem carrossel (mesma largura dos cards do carrossel) */
+/* Grade com até 4 itens (sem carrossel) */
 .c-acervo-relacionado__grid {
 	display: grid;
 	grid-template-columns: repeat(4, minmax(0, 1fr));
-	gap: 24px;
-}
-
-.c-acervo-relacionado__nav {
-	margin-top: 30px;                          /* Figma: cards → pontos */
+	gap: 24px;                                 /* Figma: 24px entre cards */
 }
 
 .c-acervo-relacionado__actions {
-	margin-top: 55px;                          /* Figma: pontos → botão */
+	margin-top: 55px;                          /* Figma: cards → botão */
 }
 
 /* --------------------------------------------------------------------------
@@ -191,10 +162,6 @@
 @media (max-width: 1023px) {
 	.c-acervo-item__grid {
 		grid-template-columns: minmax(0, 1fr) minmax(0, 300px);
-	}
-
-	.c-acervo-relacionado__carousel {
-		--carousel-per-view: 3;
 	}
 
 	.c-acervo-relacionado__grid {
@@ -240,20 +207,12 @@
 		padding-bottom: 48px;
 	}
 
-	.c-acervo-relacionado__carousel {
-		--carousel-gap: 16px;
-		--carousel-per-view: 1.5;
-	}
-
+	/* Celular: só os 2 primeiros, lado a lado */
 	.c-acervo-relacionado__grid {
 		gap: 16px;
 	}
 
-	.c-acervo-relacionado__arrow.is-prev {
-		left: 8px;
-	}
-
-	.c-acervo-relacionado__arrow.is-next {
-		right: 8px;
+	.c-acervo-relacionado__grid > li:nth-child(n + 3) {
+		display: none;
 	}
 }

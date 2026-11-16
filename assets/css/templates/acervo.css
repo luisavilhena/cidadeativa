@@ -70,6 +70,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	gap: 15px;
+	text-transform: capitalize;
 	margin-top: 39px;                          /* Figma: busca → filtros */
 }
 
@@ -128,24 +129,16 @@
 		width: 100%;
 	}
 
-	/* Filtros numa linha que rola para o lado */
+	/* Filtros em 2 colunas */
 	.c-acervo-lista__filters {
-		flex-wrap: nowrap;
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 8px;
 		margin-top: 24px;
-		margin-inline: -5.5%;
-		padding-inline: 5.5%;
-		overflow-x: auto;
-		scrollbar-width: none;
-	}
-
-	.c-acervo-lista__filters::-webkit-scrollbar {
-		display: none;
 	}
 
 	.c-acervo-lista__filter {
-		flex: 0 0 auto;
-		min-width: 120px;
+		min-width: 0;
 		max-width: none;
 	}
 
