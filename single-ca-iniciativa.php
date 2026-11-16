@@ -23,7 +23,6 @@ while ( have_posts() ) :
 	$crumb      = ca3_program_text( 'breadcrumb' );
 	$crumb_url  = ca3_program_text( 'breadcrumb_url' );
 	$ancestors  = array_reverse( get_post_ancestors( $post_id ) );
-	$aside      = array_filter( array( $quote, $axes, $products, $downloads, $actions ) );
 	?>
 	<article class="c-programa has-program-<?php echo esc_attr( $color ); ?>">
 		<header class="c-programa__cover">
@@ -44,7 +43,12 @@ while ( have_posts() ) :
 					<strong><?php the_title(); ?></strong>
 				</p>
 
-				<h1 class="c-programa__title"><?php echo ca3_program_title_html( get_the_title(), $post_id ); ?></h1>
+				<div class="c-programa__heading">
+					<?php if ( $ancestors ) : ?>
+						<p class="c-programa__kicker"><?php echo esc_html( ca3_program_text( 'action_label' ) ? ca3_program_text( 'action_label' ) : __( 'Ação', 'cidade-ativa-3' ) ); ?></p>
+					<?php endif; ?>
+					<h1 class="c-programa__title"><?php echo ca3_program_title_html( get_the_title(), $post_id ); ?></h1>
+				</div>
 
 				<?php if ( $data ) : ?>
 					<dl class="c-programa__data">
@@ -67,15 +71,13 @@ while ( have_posts() ) :
 			<?php endif; ?>
 		</header>
 
-		<?php if ( $aside || $side_text ) : ?>
-			<div class="l-container c-programa__columns">
-				<div class="c-programa__aside" data-program-aside>
-					<?php if ( $quote ) : ?>
-						<blockquote class="c-programa__quote">
-							<span class="u-accent">“</span><?php echo esc_html( $quote ); ?><span class="u-accent">”</span>
-						</blockquote>
-					<?php endif; ?>
+		<?php $has_content = '' !== trim( get_the_content() ); ?>
 
+		<?php // Ordem: capa → eixos, produtos e ações → citação e texto. ?>
+		<?php if ( $axes || $products || $downloads || $actions ) : ?>
+			<?php // Eixos, produtos e ações: alinhados à esquerda, separados por linha de 2px na cor da página. ?>
+			<div class="l-container">
+				<div class="c-programa__blocks">
 					<?php if ( $axes ) : ?>
 						<section class="c-programa__block">
 							<h2 class="c-programa__block-title"><?php echo esc_html( ca3_program_text( 'axes_title' ) ); ?></h2>
@@ -92,7 +94,8 @@ while ( have_posts() ) :
 						</section>
 					<?php endif; ?>
 
-					<?php if ( $products ) : ?>
+					<?php if ( $products || $downloads ) : ?>
+						<?php // Produtos: tudo o que não é eixo nem ação (itens do campo Produtos + arquivos de Downloads). ?>
 						<section class="c-programa__block">
 							<h2 class="c-programa__block-title"><?php echo esc_html( ca3_program_text( 'products_title' ) ); ?></h2>
 							<ul class="c-programa__products">
@@ -105,20 +108,9 @@ while ( have_posts() ) :
 										<?php endif; ?>
 									</li>
 								<?php endforeach; ?>
-							</ul>
-						</section>
-					<?php endif; ?>
-
-					<?php if ( $downloads ) : ?>
-						<section class="c-programa__block">
-							<h2 class="c-programa__block-title"><?php echo esc_html( ca3_program_text( 'downloads_title' ) ); ?></h2>
-							<ul class="c-programa__links">
 								<?php foreach ( $downloads as $download ) : ?>
 									<li>
-										<a class="c-link-card c-link-card--<?php echo esc_attr( $color ); ?>" href="<?php echo esc_url( $download['file'] ); ?>" target="_blank" rel="noopener">
-											<span class="c-link-card__text"><?php echo esc_html( $download['name'] ); ?></span>
-											<?php echo ca3_icon( 'download', 'c-link-card__icon c-link-card__icon--plain' ); ?>
-										</a>
+										<a href="<?php echo esc_url( $download['file'] ); ?>" target="_blank" rel="noopener"><?php echo esc_html( $download['name'] ? $download['name'] : wp_basename( $download['file'] ) ); ?></a>
 									</li>
 								<?php endforeach; ?>
 							</ul>
@@ -126,7 +118,8 @@ while ( have_posts() ) :
 					<?php endif; ?>
 
 					<?php if ( $actions ) : ?>
-						<section class="c-programa__block">
+						<?php // Ações da Iniciativa: grade de 2 colunas. ?>
+						<section class="c-programa__block c-programa__actions">
 							<h2 class="c-programa__block-title"><?php echo esc_html( ca3_program_text( 'actions_title' ) ); ?></h2>
 							<ul class="c-programa__links">
 								<?php foreach ( $actions as $action ) : ?>
@@ -141,20 +134,28 @@ while ( have_posts() ) :
 						</section>
 					<?php endif; ?>
 				</div>
-
-				<?php if ( $side_text ) : ?>
-					<div class="c-programa__side-text"><?php echo ca3_rich_text( $side_text ); ?></div>
-				<?php else : ?>
-					<?php // Preenchida pelo assets/js/programa.js com os primeiros parágrafos do texto. ?>
-					<div class="c-programa__side-text" data-program-side></div>
-				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 
-		<?php if ( '' !== trim( get_the_content() ) ) : ?>
+		<?php if ( $quote || $side_text || $has_content ) : ?>
 			<div class="l-container">
-				<div class="c-programa__content c-post-content c-post-content--centered" data-program-content>
-					<?php ca3_the_post_content(); ?>
+				<div class="c-programa__column">
+					<?php if ( $quote ) : ?>
+						<blockquote class="c-programa__quote">
+							<span class="u-accent">“</span><?php echo esc_html( $quote ); ?><span class="u-accent">”</span>
+						</blockquote>
+					<?php endif; ?>
+
+					<?php if ( $side_text || $has_content ) : ?>
+						<div class="c-programa__content c-post-content">
+							<?php if ( $side_text ) : ?>
+								<?php echo ca3_rich_text( $side_text ); ?>
+							<?php endif; ?>
+							<?php if ( $has_content ) : ?>
+								<?php ca3_the_post_content(); ?>
+							<?php endif; ?>
+						</div>
+					<?php endif; ?>
 				</div>
 			</div>
 		<?php endif; ?>

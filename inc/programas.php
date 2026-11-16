@@ -5,9 +5,10 @@
  *
  * Página do programa (single-ca-iniciativa.php):
  *   capa colorida (cor do programa) + dados + foto
- *   coluna esquerda: citação, produtos, downloads e ações (filhas)
- *   coluna direita: "Texto da coluna direita" (campo próprio)
- *   depois: o texto do editor, com o grid de imagens (c-post-content)
+ *   coluna de até 850px: eixos e produtos (+ downloads)
+ *   ações (filhas) na largura do contêiner, em 2 colunas
+ *   coluna de até 850px: citação, texto de abertura + texto do editor
+ *   (c-post-content, com o grid de imagens)
  *   e o carrossel "Nossos programas"
  *
  * @package cidade-ativa-3

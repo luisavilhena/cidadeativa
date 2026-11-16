@@ -71,7 +71,6 @@ function ca3_enqueue_assets() {
 		ca3_enqueue_style( 'ca3-programas', 'assets/css/components/programas.css', array( 'ca3-program-card' ) );
 		ca3_enqueue_style( 'ca3-programa', 'assets/css/templates/programa.css', array( 'ca3-post-content', 'ca3-programas' ) );
 		ca3_enqueue_script( 'carousel' );
-		ca3_enqueue_script( 'programa' );
 	}
 
 	// Listagem do Acervo.

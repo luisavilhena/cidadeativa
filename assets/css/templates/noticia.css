@@ -6,11 +6,29 @@
      .c-post-figure    imagem (+ legenda) na largura toda do contêiner
      .c-post-images    duas imagens lado a lado
      .c-post-gallery   galeria em carrossel
-   O texto fica numa coluna de 560px.
+   Abaixo da capa, título, texto, imagens e galeria ficam numa coluna
+   centralizada de até 850px (--noticia-column).
    ========================================================================== */
 
 .c-noticia {
+	--noticia-column: 850px;
 	padding-top: 8px;                          /* Figma: fim do menu → capa */
+}
+
+/* Coluna central: título, data, texto, imagens e galeria */
+.c-noticia__header,
+.c-noticia__content {
+	max-width: var(--noticia-column);
+	margin-inline: auto;
+}
+
+.c-noticia__content > * {
+	max-width: none;
+}
+
+/* Galeria: setas no meio da imagem, que agora tem a largura da coluna */
+.c-noticia .c-post-gallery__arrow {
+	top: calc(min(90vw, var(--noticia-column)) * 761 / 1144 / 2);
 }
 
 /* Capa */
@@ -32,7 +50,6 @@
 }
 
 .c-noticia__title {
-	max-width: 852px;
 	font-family: var(--font-body);
 	font-size: var(--text-h3);
 	line-height: var(--line-heading);
@@ -118,6 +135,17 @@
 @media (min-width: 768px) {
 	.c-noticia__banner {
 		max-height: 85vh;
+	}
+}
+
+/* Com a coluna de 850px sobra espaço ao lado: setas da galeria fora da imagem */
+@media (min-width: 1024px) {
+	.c-noticia .c-post-gallery__arrow.is-prev {
+		left: -62px;
+	}
+
+	.c-noticia .c-post-gallery__arrow.is-next {
+		right: -62px;
 	}
 }
 

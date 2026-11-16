@@ -39,7 +39,7 @@ return array(
 				Field::make( 'text', 'url', __( 'Link', 'cidade-ativa-3' ) )
 					->set_width( 50 )
 					->set_conditional_logic( array( array( 'field' => 'tipo', 'value' => 'link' ) ) ),
-				Field::make( 'image', 'photo', __( 'Foto (vazio = foto ícone da pessoa)', 'cidade-ativa-3' ) )->set_width( 33 ),
+				Field::make( 'image', 'photo', __( 'Foto (vazio = imagem destacada da pessoa)', 'cidade-ativa-3' ) )->set_width( 33 ),
 				Field::make( 'select', 'color', __( 'Cor', 'cidade-ativa-3' ) )
 					->set_options(
 						array(

@@ -1,7 +1,6 @@
 <?php
 /**
- * Popup "Colaboradores": título, texto e grade de cards. Cada card abre
- * o popup da própria pessoa (impresso logo depois deste).
+ * Popup "Colaboradores": título, texto e grade de cards (sem popup individual).
  *
  * Argumentos: color, title, text, close_label, projects_label.
  *
@@ -31,12 +30,10 @@ $colors        = ca3_team_card_colors();
 			$linkedin = function_exists( 'carbon_get_post_meta' ) ? carbon_get_post_meta( $person->ID, 'linkedin_link' ) : '';
 			?>
 			<li class="c-collaborator has-program-<?php echo esc_attr( $color ); ?>">
-				<button type="button" class="c-collaborator__open" data-dialog-open="<?php echo esc_attr( ca3_person_dialog_id( $person->ID ) ); ?>">
-					<span class="c-person-photo c-collaborator__photo">
-						<?php echo get_the_post_thumbnail( $person->ID, 'medium', array( 'alt' => '', 'loading' => 'lazy' ) ); ?>
-					</span>
-					<span class="c-collaborator__name"><?php echo esc_html( get_the_title( $person ) ); ?></span>
-				</button>
+				<span class="c-person-photo c-collaborator__photo">
+					<?php echo get_the_post_thumbnail( $person->ID, 'medium', array( 'alt' => '', 'loading' => 'lazy' ) ); ?>
+				</span>
+				<h3 class="c-collaborator__name"><?php echo esc_html( get_the_title( $person ) ); ?></h3>
 				<?php $role = ca3_person_role( $person->ID ); ?>
 				<?php if ( $role ) : ?>
 					<p class="c-collaborator__role"><?php echo esc_html( $role ); ?></p>
@@ -64,17 +61,3 @@ $colors        = ca3_team_card_colors();
 	</ul>
 </dialog>
 
-<?php foreach ( $collaborators as $i => $person ) : ?>
-	<?php
-	get_template_part(
-		'template-parts/equipe/person-dialog',
-		null,
-		array(
-			'post_id'        => $person->ID,
-			'color'          => $colors[ $i % count( $colors ) ],
-			'close_label'    => $args['close_label'],
-			'projects_label' => $args['projects_label'],
-		)
-	);
-	?>
-<?php endforeach; ?>

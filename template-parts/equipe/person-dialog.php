@@ -23,7 +23,7 @@ $dialog_id   = ca3_person_dialog_id( $post_id );
 		<div class="c-person-dialog__profile">
 			<?php if ( has_post_thumbnail( $post_id ) ) : ?>
 				<figure class="c-person-photo c-person-dialog__photo">
-					<?php echo get_the_post_thumbnail( $post_id, 'medium_large', array( 'alt' => '', 'loading' => 'lazy' ) ); ?>
+					<?php echo get_the_post_thumbnail( $post_id, 'medium_large', ca3_photo_position_attr( $post_id, array( 'alt' => '', 'loading' => 'lazy' ) ) ); ?>
 				</figure>
 			<?php endif; ?>
 

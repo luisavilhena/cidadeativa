@@ -140,25 +140,8 @@
 	margin-top: 32px;
 }
 
-.c-collaborator__open {
-	display: block;
-	width: 100%;
-	padding: 0;
-	border: 0;
-	background: none;
-	color: inherit;
-	text-align: left;
-	cursor: pointer;
-}
-
 .c-collaborator__photo {
 	aspect-ratio: 1;
-	transition: transform 0.25s ease;
-}
-
-.c-collaborator__open:hover .c-collaborator__photo,
-.c-collaborator__open:focus-visible .c-collaborator__photo {
-	transform: scale(1.03);
 }
 
 .c-collaborator__name {

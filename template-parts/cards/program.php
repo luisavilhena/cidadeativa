@@ -1,7 +1,7 @@
 <?php
 /**
- * Card de programa (c-program-card): foto, nome (última palavra em negrito),
- * cata-vento e frase. Borda e cata-vento na cor do programa.
+ * Card de programa (c-program-card): foto (campo "Imagem do card" ou a
+ * imagem destacada), nome (última palavra em negrito), cata-vento e frase. Borda e cata-vento na cor do programa.
  *
  * @package cidade-ativa-3
  */
@@ -10,7 +10,15 @@ $post_id = get_the_ID();
 ?>
 <a class="c-program-card has-program-<?php echo esc_attr( ca3_program_color( $post_id ) ); ?>" href="<?php the_permalink(); ?>">
 	<span class="c-program-card__media">
-		<?php the_post_thumbnail( 'medium_large', array( 'class' => 'c-program-card__image', 'alt' => '' ) ); ?>
+		<?php
+		$card_image = (int) ca3_program_field( $post_id, 'card_image' );
+		$image_attr = array( 'class' => 'c-program-card__image', 'alt' => '' );
+		if ( $card_image ) {
+			echo wp_get_attachment_image( $card_image, 'medium_large', false, $image_attr );
+		} else {
+			the_post_thumbnail( 'medium_large', $image_attr );
+		}
+		?>
 	</span>
 	<span class="c-program-card__body">
 		<span class="c-program-card__head">

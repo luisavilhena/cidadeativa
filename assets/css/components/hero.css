@@ -123,3 +123,136 @@
 		object-position: center;
 	}
 }
+
+/* ==========================================================================
+   Animações de teste (campo "Animação" do Hero)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Parallax (has-anim-parallax): conforme a rolagem, o triângulo e a
+   ilustração descem uma fração dela, então andam mais devagar que a
+   página (triângulo a 75%, ilustração a 55%).
+
+   Feito com animação ligada à rolagem (animation-timeline: scroll()),
+   que o navegador calcula junto com a rolagem, sem tremer. Navegadores
+   sem suporte usam o JS de reserva em hero.js.
+   Nos primeiros 2000px de rolagem: triângulo desce 500px (25%) e a
+   ilustração 900px (45%).
+   -------------------------------------------------------------------------- */
+
+/* O que desce fica recortado na área original do bloco (não invade Números) */
+.has-anim-parallax .c-hero__visual {
+	overflow: hidden;
+}
+
+.has-anim-parallax .c-hero__triangle,
+.has-anim-parallax .c-hero__image {
+	will-change: transform;
+}
+
+@supports (animation-timeline: scroll()) {
+	@media (prefers-reduced-motion: no-preference) {
+		.has-anim-parallax .c-hero__triangle {
+			animation: ca3-parallax-triangle linear both;
+			animation-timeline: scroll(root);
+			animation-range: 0px 2000px;
+		}
+
+		.has-anim-parallax .c-hero__image {
+			animation: ca3-parallax-image linear both;
+			animation-timeline: scroll(root);
+			animation-range: 0px 2000px;
+		}
+	}
+}
+
+@keyframes ca3-parallax-triangle {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+
+	to {
+		transform: translate3d(0, 500px, 0);
+	}
+}
+
+@keyframes ca3-parallax-image {
+	from {
+		transform: translate3d(0, 0, 0);
+	}
+
+	to {
+		transform: translate3d(0, 900px, 0);
+	}
+}
+
+/* --------------------------------------------------------------------------
+   Montagem (has-anim-montagem): o triângulo cresce a partir da borda
+   direita e depois cada figura entra com fade, uma de cada vez
+   (ordem = inc/hero-montagem.php, variável --i).
+   -------------------------------------------------------------------------- */
+
+/* Ilustração montada com as figuras: mesma proporção da imagem original,
+   o maior possível dentro do bloco (como object-fit: contain). */
+.c-hero__figures {
+	position: relative;
+	width: 100%;
+	aspect-ratio: 1172 / 1592;
+}
+
+.c-hero__figure {
+	position: absolute;
+	max-width: none;
+}
+
+@media (min-width: 1200px) {
+	.has-anim-montagem .c-hero__stage {
+		container-type: size;
+	}
+
+	.c-hero__figures {
+		position: absolute;
+		inset: 0;
+		width: min(100cqw, 100cqh * 1172 / 1592);
+		height: min(100cqh, 100cqw * 1592 / 1172);
+		margin: auto;
+	}
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.has-anim-montagem .c-hero__triangle {
+		animation: ca3-hero-triangle 1.2s cubic-bezier(0.65, 0, 0.35, 1) both;
+	}
+
+	.has-anim-montagem .c-hero__figure {
+		animation: ca3-hero-figure 0.6s ease-out both;
+		animation-delay: calc(1.1s + var(--i, 0) * 0.15s);   /* depois do triângulo */
+	}
+
+	/* As figuras esperam as imagens carregarem (hero.js põe is-ready) */
+	.has-anim-montagem:not(.is-ready) .c-hero__figure {
+		animation-play-state: paused;
+	}
+}
+
+@keyframes ca3-hero-triangle {
+	from {
+		clip-path: polygon(100% 50%, 100% 50%, 100% 50%);
+	}
+
+	to {
+		clip-path: polygon(100% 0, 0 50%, 100% 100%);
+	}
+}
+
+@keyframes ca3-hero-figure {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}

@@ -169,6 +169,13 @@
 	right: max(8px, calc((100% - min(90vw, var(--container-max))) / 2 - 56px));
 }
 
+/* Até 4 itens: grade simples, sem carrossel (mesma largura dos cards do carrossel) */
+.c-acervo-relacionado__grid {
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 24px;
+}
+
 .c-acervo-relacionado__nav {
 	margin-top: 30px;                          /* Figma: cards → pontos */
 }
@@ -188,6 +195,10 @@
 
 	.c-acervo-relacionado__carousel {
 		--carousel-per-view: 3;
+	}
+
+	.c-acervo-relacionado__grid {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 
@@ -232,6 +243,10 @@
 	.c-acervo-relacionado__carousel {
 		--carousel-gap: 16px;
 		--carousel-per-view: 1.5;
+	}
+
+	.c-acervo-relacionado__grid {
+		gap: 16px;
 	}
 
 	.c-acervo-relacionado__arrow.is-prev {

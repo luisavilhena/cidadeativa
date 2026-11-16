@@ -2,8 +2,9 @@
 /**
  * Equipe e colaboradores (popups da seção "Quem somos" da home).
  *
- *   Membro da equipe (ca-team-member): foto ícone (etiqueta), imagem
- *   destacada (popup), resumo = cargo, texto = descrição, LinkedIn.
+ *   Membro da equipe (ca-team-member): imagem destacada (popup e etiqueta,
+ *   com a posição da caixa "Posição da foto"), resumo = cargo,
+ *   texto = descrição, LinkedIn.
  *   Colaborador (ca-collaborator): imagem destacada, cargo, iniciativas
  *   em que colaborou, LinkedIn.
  *

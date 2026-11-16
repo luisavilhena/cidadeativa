@@ -74,8 +74,9 @@
    -------------------------------------------------------------------------- */
 
 .c-quem-somos__team {
+	--team-padding: 45px;                      /* Figma: semicírculo → ilustração */
 	position: relative;
-	padding-top: 45px;                         /* Figma: semicírculo → ilustração */
+	padding-top: var(--team-padding);
 }
 
 @media (max-width: 767px) {
@@ -89,12 +90,18 @@
 	}
 
 	.c-quem-somos__team {
-		padding-top: 32px;
+		--team-padding: 32px;
 	}
 }
 
+/* Ilustração + espaço acima: no máximo 95% da altura da tela.
+   Se a altura limitar, a imagem diminui mantendo a proporção (contain). */
 .c-quem-somos__image {
 	width: min(100%, 58.5rem);                 /* 936px */
+	height: auto;
+	max-height: calc(95vh - var(--team-padding));
+	max-height: calc(95svh - var(--team-padding));
+	object-fit: contain;
 	margin-inline: auto;
 }
 

@@ -22,6 +22,7 @@ require_once CA3_DIR . '/inc/noticia.php';
 require_once CA3_DIR . '/inc/programas.php';
 require_once CA3_DIR . '/inc/site-chrome.php';
 require_once CA3_DIR . '/inc/equipe.php';
+require_once CA3_DIR . '/inc/photo-position.php';
 require_once CA3_DIR . '/inc/carbon-fields.php';
 require_once CA3_DIR . '/inc/enqueue.php';
 require_once CA3_DIR . '/inc/helpers/template-tags.php';

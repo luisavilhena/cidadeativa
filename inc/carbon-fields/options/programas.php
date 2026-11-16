@@ -15,10 +15,12 @@ Container::make( 'theme_options', __( 'Textos da página do programa', 'cidade-a
 		array(
 			Field::make( 'text', 'ca3_program_breadcrumb', __( 'Caminho: primeiro item (ex.: Programas)', 'cidade-ativa-3' ) )->set_width( 50 ),
 			Field::make( 'text', 'ca3_program_breadcrumb_url', __( 'Caminho: link do primeiro item (opcional)', 'cidade-ativa-3' ) )->set_width( 50 ),
-			Field::make( 'text', 'ca3_program_axes_title', __( 'Título: Eixos', 'cidade-ativa-3' ) )->set_width( 25 ),
-			Field::make( 'text', 'ca3_program_products_title', __( 'Título: Produtos', 'cidade-ativa-3' ) )->set_width( 25 ),
-			Field::make( 'text', 'ca3_program_downloads_title', __( 'Título: Downloads', 'cidade-ativa-3' ) )->set_width( 25 ),
-			Field::make( 'text', 'ca3_program_actions_title', __( 'Título: Ações da Iniciativa', 'cidade-ativa-3' ) )->set_width( 25 ),
+			Field::make( 'text', 'ca3_program_action_label', __( 'Rótulo acima do título nas ações (iniciativas filhas)', 'cidade-ativa-3' ) )
+				->set_default_value( 'Ação' )
+				->set_help_text( __( 'Se ficar vazio, aparece "Ação".', 'cidade-ativa-3' ) ),
+			Field::make( 'text', 'ca3_program_axes_title', __( 'Título: Eixos', 'cidade-ativa-3' ) )->set_width( 33 ),
+			Field::make( 'text', 'ca3_program_products_title', __( 'Título: Produtos (inclui os Downloads)', 'cidade-ativa-3' ) )->set_width( 33 ),
+			Field::make( 'text', 'ca3_program_actions_title', __( 'Título: Ações da Iniciativa', 'cidade-ativa-3' ) )->set_width( 33 ),
 			Field::make( 'separator', 'ca3_program_labels_sep', __( 'Rótulos dos dados da capa', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'ca3_program_label_year', __( 'Ano', 'cidade-ativa-3' ) )->set_width( 33 ),
 			Field::make( 'text', 'ca3_program_label_status', __( 'Status', 'cidade-ativa-3' ) )->set_width( 33 ),

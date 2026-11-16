@@ -13,10 +13,8 @@ Container::make( 'post_meta', __( 'Dados dx membrx da equipe', 'cidade-ativa-3' 
 	->where( 'post_type', '=', 'ca-team-member' )
 	->add_fields(
 		array(
-			Field::make( 'image', 'ca3_member_icon', __( 'Foto ícone (etiqueta da home)', 'cidade-ativa-3' ) )
-				->set_help_text( __( 'Foto pequena e redonda. A foto maior do popup é a imagem destacada; o cargo é o resumo e a descrição é o texto do editor.', 'cidade-ativa-3' ) ),
-			Field::make( 'text', 'photo_top', __( 'Posição Y na foto', 'cidade-ativa-3' ) ),
-			Field::make( 'text', 'photo_left', __( 'Posição X na foto', 'cidade-ativa-3' ) ),
+			Field::make( 'html', 'ca3_member_help' )
+				->set_html( '<p>' . esc_html__( 'A foto do popup e da etiqueta da home é a imagem destacada (enquadre na caixa "Posição da foto"); o cargo é o resumo e a descrição é o texto do editor.', 'cidade-ativa-3' ) . '</p>' ),
 			Field::make( 'text', 'facebook_link', __( 'Link para perfil no Facebook', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'linkedin_link', __( 'Link para perfil no LinkedIn', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'instagram_link', __( 'Link para perfil no Instagram', 'cidade-ativa-3' ) ),

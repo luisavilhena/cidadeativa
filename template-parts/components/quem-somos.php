@@ -42,13 +42,13 @@ ca3_section_open( 'quem_somos', $args );
 						$member = 'membro' === $type ? ca3_tag_member( $person ) : null;
 						$name   = ca3_get( $person, 'name', $member ? get_the_title( $member ) : '' );
 						$photo  = ca3_get( $person, 'photo' );
+						$photo_attr = array( 'alt' => '' );
 
-						// Foto: a da etiqueta, a foto ícone da pessoa ou a imagem destacada.
-						if ( ! $photo && $member && function_exists( 'carbon_get_post_meta' ) ) {
-							$photo = carbon_get_post_meta( $member->ID, 'ca3_member_icon' );
-						}
+						// Foto: a da etiqueta ou a imagem destacada da pessoa.
 						if ( ! $photo && $member ) {
 							$photo = get_post_thumbnail_id( $member );
+							// Mesma posição escolhida na caixa "Posição da foto".
+							$photo_attr = ca3_photo_position_attr( $member->ID, $photo_attr );
 						}
 
 						// O que acontece ao clicar: abre um popup ou segue um link.
@@ -76,7 +76,7 @@ ca3_section_open( 'quem_somos', $args );
 									<?php if ( 'colaboradores' === $type && ! $photo ) : ?>
 										<?php echo ca3_icon( 'perm-identity', 'c-tag__icon' ); ?>
 									<?php else : ?>
-										<?php echo ca3_image( $photo, 'thumbnail', 'c-tag__photo', array( 'alt' => '' ) ); ?>
+										<?php echo ca3_image( $photo, isset( $photo_attr['style'] ) ? 'medium' : 'thumbnail', 'c-tag__photo', $photo_attr ); ?>
 									<?php endif; ?>
 								</span>
 								<span class="c-tag__name"><?php echo esc_html( $name ); ?></span>

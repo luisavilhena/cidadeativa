@@ -207,26 +207,67 @@ function ca3_acervo_item_data( $post_id ) {
 }
 
 /**
- * Itens relacionados: mesma categoria do acervo, sem o item atual.
+ * Itens relacionados: os da mesma categoria do acervo, sem o item atual, até a
+ * quantidade configurada. Se houver menos de CA3_ACERVO_RELATED_MIN deles, a lista
+ * é completada com os itens mais recentes de outras categorias até somar
+ * CA3_ACERVO_RELATED_MIN (sem carrossel; ver template-parts/acervo/related.php).
  */
+const CA3_ACERVO_RELATED_MIN = 4;
+
 function ca3_acervo_related_query( $post_id ) {
 	$count      = (int) ca3_acervo_item_text( 'related_count' );
+	$count      = $count > 0 ? $count : 8;
 	$categories = wp_list_pluck( get_the_category( $post_id ), 'term_id' );
 
-	$args = array(
+	$base = array(
 		'post_type'           => 'ca-biblioteca',
 		'post_status'         => 'publish',
-		'posts_per_page'      => $count > 0 ? $count : 8,
-		'post__not_in'        => array( $post_id ),
 		'ignore_sticky_posts' => true,
 		'no_found_rows'       => true,
+		'fields'              => 'ids',
 	);
 
+	$ids = array();
+
 	if ( $categories ) {
-		$args['category__in'] = $categories;
+		$ids = get_posts(
+			array_merge(
+				$base,
+				array(
+					'numberposts'  => $count,
+					'post__not_in' => array( $post_id ),
+					'category__in' => $categories,
+				)
+			)
+		);
 	}
 
-	return new WP_Query( $args );
+	if ( count( $ids ) < CA3_ACERVO_RELATED_MIN ) {
+		$ids = array_merge(
+			$ids,
+			get_posts(
+				array_merge(
+					$base,
+					array(
+						'numberposts'  => CA3_ACERVO_RELATED_MIN - count( $ids ),
+						'post__not_in' => array_merge( array( $post_id ), $ids ),
+					)
+				)
+			)
+		);
+	}
+
+	return new WP_Query(
+		array(
+			'post_type'           => 'ca-biblioteca',
+			'post_status'         => 'publish',
+			'post__in'            => $ids ? $ids : array( 0 ),
+			'orderby'             => 'post__in',
+			'posts_per_page'      => count( $ids ) ? count( $ids ) : 1,
+			'ignore_sticky_posts' => true,
+			'no_found_rows'       => true,
+		)
+	);
 }
 
 /**

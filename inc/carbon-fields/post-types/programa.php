@@ -19,6 +19,8 @@ Container::make( 'post_meta', __( 'Página do programa', 'cidade-ativa-3' ) )
 			Field::make( 'checkbox', 'ca3_prog_in_carousel', __( 'Mostrar no carrossel "Nossos programas"', 'cidade-ativa-3' ) )
 				->set_help_text( __( 'A ordem segue o campo "Ordem" em Atributos da página.', 'cidade-ativa-3' ) )
 				->set_width( 50 ),
+			Field::make( 'image', 'ca3_prog_card_image', __( 'Imagem do card (carrossel "Nossos programas")', 'cidade-ativa-3' ) )
+				->set_help_text( __( 'Se ficar vazia, o card usa a imagem destacada.', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'ca3_prog_title_bold', __( 'Parte do nome em negrito (final do nome, ex.: do Sim)', 'cidade-ativa-3' ) )
 				->set_help_text( __( 'Se ficar vazio, a última palavra fica em negrito.', 'cidade-ativa-3' ) ),
 			Field::make( 'text', 'ca3_prog_subtitle', __( 'Frase do card (ex.: Cidades para e com as infâncias)', 'cidade-ativa-3' ) )
@@ -42,13 +44,13 @@ Container::make( 'post_meta', __( 'Página do programa', 'cidade-ativa-3' ) )
 		)
 	)
 	->add_tab(
-		__( 'Colunas', 'cidade-ativa-3' ),
+		__( 'Conteúdo', 'cidade-ativa-3' ),
 		array(
-			Field::make( 'rich_text', 'ca3_prog_side_text', __( 'Texto da coluna direita', 'cidade-ativa-3' ) )
-				->set_help_text( __( 'Aparece só na coluna da direita, ao lado de produtos e ações. Se ficar vazio, a coluna recebe os primeiros parágrafos do texto do editor, até a altura da coluna da esquerda.', 'cidade-ativa-3' ) ),
-			Field::make( 'textarea', 'ca3_prog_quote', __( 'Citação (coluna esquerda, opcional)', 'cidade-ativa-3' ) )
+			Field::make( 'rich_text', 'ca3_prog_side_text', __( 'Texto de abertura (opcional)', 'cidade-ativa-3' ) )
+				->set_help_text( __( 'Aparece logo antes do texto do editor, depois das Ações da Iniciativa.', 'cidade-ativa-3' ) ),
+			Field::make( 'textarea', 'ca3_prog_quote', __( 'Citação (opcional, logo antes do texto)', 'cidade-ativa-3' ) )
 				->set_rows( 3 ),
-			Field::make( 'complex', 'ca3_prog_products', __( 'Produtos (coluna esquerda)', 'cidade-ativa-3' ) )
+			Field::make( 'complex', 'ca3_prog_products', __( 'Produtos', 'cidade-ativa-3' ) )
 				->set_layout( 'tabbed-horizontal' )
 				->add_fields(
 					array(
@@ -58,6 +60,6 @@ Container::make( 'post_meta', __( 'Página do programa', 'cidade-ativa-3' ) )
 				)
 				->set_header_template( '<%- texto %>' ),
 			Field::make( 'html', 'ca3_prog_help_columns' )
-				->set_html( '<p>' . esc_html__( 'Na coluna esquerda também aparecem: os Eixos (caixa "Dados da iniciativa"), os Downloads (caixa "Downloads") e as "Ações da Iniciativa" (iniciativas filhas publicadas).', 'cidade-ativa-3' ) . '</p>' ),
+				->set_html( '<p>' . esc_html__( 'Ordem na página: capa, Eixos (caixa "Dados da iniciativa"), Produtos (inclui os arquivos da caixa "Downloads"), "Ações da Iniciativa" (iniciativas filhas publicadas, em duas colunas) e, por fim, citação, texto de abertura e texto do editor.', 'cidade-ativa-3' ) . '</p>' ),
 		)
 	);

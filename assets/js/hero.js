@@ -63,7 +63,16 @@
 		}
 
 		update();
-		window.addEventListener( 'resize', update );
+
+		// Só mede de novo quando a largura muda: no celular a altura muda ao
+		// rolar (barra do navegador aparece/some) e remedir faria a ilustração pular.
+		var lastWidth = window.innerWidth;
+		window.addEventListener( 'resize', function () {
+			if ( window.innerWidth !== lastWidth ) {
+				lastWidth = window.innerWidth;
+				update();
+			}
+		} );
 		window.addEventListener( 'load', update );
 
 		if ( document.fonts && document.fonts.ready ) {
@@ -71,5 +80,81 @@
 		}
 	}
 
+	/**
+	 * Animação "Parallax" (has-anim-parallax): ao rolar, o triângulo e a
+	 * ilustração descem uma fração da rolagem, então andam mais devagar que
+	 * a página. A ilustração desce mais, ou seja, é a mais lenta.
+	 *
+	 * Reserva: só roda em navegadores sem animação ligada à rolagem
+	 * (animation-timeline), que é feita no CSS (hero.css) e não treme.
+	 */
+	var PARALLAX = [
+		{ selector: '.c-hero__triangle', speed: 0.25 }, // anda a 75% da rolagem
+		{ selector: '.c-hero__image', speed: 0.45 }, //    anda a 55% da rolagem
+	];
+
+	function initParallax( hero ) {
+		if ( window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches ) {
+			return;
+		}
+
+		if ( window.CSS && CSS.supports( 'animation-timeline: scroll()' ) ) {
+			return;
+		}
+
+		var layers = PARALLAX.map( function ( layer ) {
+			return { element: hero.querySelector( layer.selector ), speed: layer.speed };
+		} ).filter( function ( layer ) {
+			return layer.element;
+		} );
+
+		function update() {
+			// Só enquanto o hero (mais uma tela) está à vista.
+			var rect = hero.getBoundingClientRect();
+			if ( rect.bottom < -window.innerHeight ) {
+				return;
+			}
+
+			// Mesma conta do CSS: fração da rolagem da página, em px inteiros.
+			var scrolled = Math.min( window.scrollY, 2000 );
+			layers.forEach( function ( layer ) {
+				layer.element.style.transform = 'translate3d(0, ' + Math.round( scrolled * layer.speed ) + 'px, 0)';
+			} );
+		}
+
+		// Atualiza no próprio evento de rolagem (sem esperar o próximo quadro),
+		// para o transform acompanhar a rolagem o mais rápido possível.
+		window.addEventListener( 'scroll', update, { passive: true } );
+
+		update();
+	}
+
+	/**
+	 * Animação "Montagem" (has-anim-montagem): as figuras só começam a entrar
+	 * depois que as imagens carregaram (ou após 3s), para o fade não ser
+	 * perdido numa conexão lenta. Ver hero.css.
+	 */
+	function initMontagem( hero ) {
+		var images = Array.prototype.slice.call( hero.querySelectorAll( '.c-hero__figure' ) );
+		var done = false;
+
+		function ready() {
+			if ( ! done ) {
+				done = true;
+				hero.classList.add( 'is-ready' );
+			}
+		}
+
+		Promise.all(
+			images.map( function ( image ) {
+				return image.decode ? image.decode().catch( function () {} ) : Promise.resolve();
+			} )
+		).then( ready );
+
+		setTimeout( ready, 3000 );
+	}
+
 	document.querySelectorAll( '.c-hero' ).forEach( initHero );
+	document.querySelectorAll( '.c-hero.has-anim-parallax' ).forEach( initParallax );
+	document.querySelectorAll( '.c-hero.has-anim-montagem' ).forEach( initMontagem );
 } )();

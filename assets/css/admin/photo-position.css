@@ -1,0 +1,27 @@
+/* Caixa "Posição da foto" (admin, edição do membro da equipe). */
+
+.ca3-photo-position__frame {
+	/* Mesmo recorte da foto no popup da pessoa (.c-person-dialog__photo). */
+	aspect-ratio: 344 / 229;
+	overflow: hidden;
+	background: #f0f0f1;
+	cursor: grab;
+	touch-action: none;
+	user-select: none;
+}
+
+.ca3-photo-position__frame[hidden] {
+	display: none;
+}
+
+.ca3-photo-position__frame.is-dragging {
+	cursor: grabbing;
+}
+
+.ca3-photo-position__frame img {
+	display: block;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	pointer-events: none;
+}

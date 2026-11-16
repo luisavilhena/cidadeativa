@@ -8,13 +8,24 @@
 $title = ca3_get( $args, 'title' );
 $text  = ca3_get( $args, 'text' );
 $image = ca3_get( $args, 'image' );
+$anim  = ca3_get( $args, 'animation' );
+$anim  = in_array( $anim, array( 'parallax', 'montagem' ), true ) ? $anim : '';
 
-ca3_section_open( 'hero', $args );
+ca3_section_open( 'hero', $args, $anim ? array( 'has-anim-' . $anim ) : array() );
 ?>
 	<div class="c-hero__visual">
 		<div class="c-hero__stage">
 			<div class="c-hero__triangle" aria-hidden="true"></div>
-			<?php echo ca3_image( $image, 'full', 'c-hero__image', array( 'loading' => 'eager' ) ); ?>
+			<?php if ( 'montagem' === $anim ) : ?>
+				<?php // Ilustração em figuras separadas (inc/hero-montagem.php), que entram uma a uma. ?>
+				<div class="c-hero__figures" aria-hidden="true">
+					<?php foreach ( require CA3_DIR . '/inc/hero-montagem.php' as $i => $figure ) : ?>
+						<img class="c-hero__figure" src="<?php echo esc_url( CA3_URI . '/assets/images/hero-montagem/' . $figure['file'] . '.png' ); ?>" alt="" style="<?php echo esc_attr( sprintf( 'left:%s%%;top:%s%%;width:%s%%;height:%s%%;--i:%d', $figure['left'], $figure['top'], $figure['width'], $figure['height'], $i ) ); ?>">
+					<?php endforeach; ?>
+				</div>
+			<?php else : ?>
+				<?php echo ca3_image( $image, 'full', 'c-hero__image', array( 'loading' => 'eager' ) ); ?>
+			<?php endif; ?>
 		</div>
 	</div>
 
